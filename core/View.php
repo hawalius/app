@@ -13,7 +13,13 @@ class Twig_Hawalius_Environment extends \Twig_Environment{
 	}
 }
 function loadTwig(){
-	$loader = new \Twig_Loader_Filesystem(HAWALIUS_PATH . '/app/views/');
+	global $config;
+	if(isset($config['dirs']['theme'])){
+		$theme = $config['dirs']['theme'];
+	}else{
+		$theme = 'default';
+	}
+	$loader = new \Twig_Loader_Filesystem(HAWALIUS_PATH . '/app/themes/' . $theme);
 	$twig = new Twig_Hawalius_Environment($loader, array(
 		'cache' => false
 	));
