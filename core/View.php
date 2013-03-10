@@ -6,7 +6,7 @@ require HAWALIUS_PATH . '/app/vendor/Twig/Autoloader.php';
 class Twig_Hawalius_Environment extends \Twig_Environment{
 	public function render($template, array $vars = array()){
 		try{
-			return parent::render($template, $vars);
+			echo parent::render($template, $vars);
 		}catch(Twig_Error_Loader $e) {
 			echo '<h2>'.$e->getRawMessage().'</h2>';
 		}
@@ -19,7 +19,7 @@ function loadTwig(){
 	}else{
 		$theme = 'default';
 	}
-	$loader = new \Twig_Loader_Filesystem(HAWALIUS_PATH . '/app/themes/' . $theme);
+	$loader = new \Twig_Loader_Filesystem(HAWALIUS_PATH . '/themes/' . $theme);
 	$twig = new Twig_Hawalius_Environment($loader, array(
 		'cache' => false
 	));
