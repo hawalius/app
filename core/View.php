@@ -13,8 +13,8 @@ class Twig_Hawalius_Environment extends \Twig_Environment{
 	}
 }
 function loadTwig(){
-	$loader = new \Twig_Loader_Filesystem(APP_DIR . '/views/');
-	$twig = new \Twig_Hawalius_Environment($loader, array(
+	$loader = new \Twig_Loader_Filesystem(HAWALIUS_PATH . '/app/views/');
+	$twig = new Twig_Hawalius_Environment($loader, array(
 		'cache' => false
 	));
 	return $twig;

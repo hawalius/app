@@ -38,6 +38,8 @@ try{
 	
 	$DB = new DB();
 	
+	$twig = loadTwig();
+	
 	$app = new App($twig);
 	spl_autoload_register(array($app, 'autoload'));
 	$app->run();
