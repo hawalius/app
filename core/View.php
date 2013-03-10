@@ -14,8 +14,8 @@ class Twig_Hawalius_Environment extends \Twig_Environment{
 }
 function loadTwig(){
 	global $config;
-	if(isset($config['dirs']['theme'])){
-		$theme = $config['dirs']['theme'];
+	if(isset($config['theme'])){
+		$theme = $config['theme'];
 	}else{
 		$theme = 'default';
 	}
