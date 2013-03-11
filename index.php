@@ -8,7 +8,7 @@ if(!defined('HAWALIUS_PATH')){
 }
 
 // Compares PHP version against our requirement.
-if(!version_compare( PHP_VERSION, '5.4.0', '>=' )){
+if(!version_compare(PHP_VERSION, '5.4.0', '>=')){
 	die('Hawalius needs PHP 5.4.0 or higher to run. You are currently running PHP ' . PHP_VERSION . '.');
 }
 
