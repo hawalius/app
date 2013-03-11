@@ -3,6 +3,9 @@ namespace Hawalius\Controllers;
 
 class Index extends \Hawalius\Controller{
 	public function index(){
-		$this->view->render('posts.html');
+		$post = $this->app->getModel('post');
+		$this->view->render('posts.html', array(
+			'posts' => $post->many()
+		));
 	}
 }

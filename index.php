@@ -22,10 +22,13 @@ if(ENV == 'development'){
 session_start();
 ob_start();
 
+date_default_timezone_set('Europe/Paris');
+
 try{
 	require HAWALIUS_PATH . '/app/core/DB.php';
 	require HAWALIUS_PATH . '/app/core/App.php';
 	require HAWALIUS_PATH . '/app/core/Controller.php';
+	require HAWALIUS_PATH . '/app/core/Model.php';
 	require HAWALIUS_PATH . '/app/core/View.php';
 	require HAWALIUS_PATH . '/app/core/Utils.php';
 	

@@ -34,7 +34,7 @@ class App{
 			$className = 'Hawalius\\Controllers\\FourOhFour';
 		}
 
-		$controller = new $className($this->view);
+		$controller = new $className($this, $this->view);
 		$method = $this->_method;
 		
 		if(method_exists($className, $method) && is_callable(array($className, $method))){
@@ -50,5 +50,13 @@ class App{
 		if(file_exists($file)){
 			require $file;
 		}
+	}
+	
+	public function getModel($modelName){
+		if(file_exists(HAWALIUS_PATH . '/app/models/' . $modelName . '.php')){
+			require HAWALIUS_PATH . '/app/models/' . $modelName . '.php';
+		}
+		$modelName = '\\Hawalius\\Models\\' . ucfirst($modelName);
+		return new $modelName($this);
 	}
 }

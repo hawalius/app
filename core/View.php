@@ -1,5 +1,6 @@
 <?php
 namespace Hawalius;
+
 require HAWALIUS_PATH . '/app/vendor/Twig/Autoloader.php';
 \Twig_Autoloader::register();
 
