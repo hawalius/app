@@ -3,7 +3,11 @@ function redirect($location = '/', $statusCode = 302){
 	header('Location: ' . $location, true, $statusCode);
 }
 function getBlogInfo(){
-	
+	global $config;
+	return array(
+		'name' => isset($config['blog']['name']) ? $config['blog']['name'] : 'Hawalius blog',
+		'slogan' => isset($config['blog']['slogan']) ? $config['blog']['slogan'] : 'Just a blog'
+	);
 }
 function getAssetUrl(){
 	global $config;
@@ -13,4 +17,9 @@ function getAssetUrl(){
 		$theme = 'default';
 	}
 	return '/themes/' . $theme;
+}
+function isExternal($url){
+	$urlHost = parse_url($url, PHP_URL_HOST);
+	$baseUrlHost = parse_url($_SERVER['SERVER_NAME'], PHP_URL_HOST);
+	return $urlHost !== $baseUrlHost || !empty($urlHost);
 }
