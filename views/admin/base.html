@@ -1,0 +1,39 @@
+{% set blog_info = getBlogInfo() %}
+{% set blog_name = blog_info.name %}
+{% set blog_slogan = blog_info.slogan %}
+{% set asset_url = getAssetUrl() %}
+<!doctype html>
+<html>
+<head>
+	<title>{{ blog_name }}{% if prefix %} - {{ prefix }} {% endif %}</title>
+	<meta charset="utf8" />
+	<link href="{{ asset_url }}/css/normalize.css" rel="stylesheet" />
+	<link href="{{ asset_url }}/css/style.css" rel="stylesheet" />
+{% for stylesheet in stylesheets %}
+	<link href="{{ asset_url }}/css/{{stylesheet}}" rel="stylesheet" />
+{% endfor %}
+	<!--[if lt IE 9]>
+		<script type="text/javascript" src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<style type="text/css">header,nav,section,article,aside,footer,hgroup,main { display: block;}</style>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<![endif]-->
+	<script src="{{ asset_url }}/scripts/theme.js"></script>
+</head>
+<body>
+<div id="wrapper">
+	<header id="top">
+		<h1 id="logo"><a href="/">{{ blog_name }}</a></h1>
+		<span class="slogan">{{ blog_slogan }}
+	</header>
+	<main>
+		<div id="content">
+			{% block content %}
+			{% endblock %}
+		</div>
+	</main>
+	<footer id="bottom">
+		<p>Powered by <a href="http://github.com/hawalius/hawalius">Hawalius</a></p>
+	</footer>
+</div>
+</body>
+</htm>

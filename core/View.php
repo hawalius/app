@@ -20,7 +20,10 @@ function loadTwig(){
 	}else{
 		$theme = 'default';
 	}
-	$loader = new \Twig_Loader_Filesystem(HAWALIUS_PATH . '/themes/' . $theme);
+	$loader = new \Twig_Loader_Filesystem(array(
+		HAWALIUS_PATH . '/themes/' . $theme,
+		HAWALIUS_PATH . '/app/views'
+	));
 	$twig = new Twig_Hawalius_Environment($loader, array(
 		'cache' => false
 	));

@@ -24,7 +24,7 @@ class DB extends PDO{
 	public function prepare($query, $options = array()){
 		global $config;
 		try{
-			$sth = parent::prepare($query, $options);
+			$sth = parent::prepare(str_replace('::', $config['db']['prefix'], $query), $options);
 		}catch(PDOException $e){
 			if($this->debug){
 				throw new PDOException($e);
@@ -34,15 +34,10 @@ class DB extends PDO{
 		return $sth;
 	}
 	
-	public function query($query, $options = array()){
+	public function query($query){
 		global $config;
 		try{
-			// This works around an stupid PHP issue
-			if($options){
-				$sth = parent::query($query, $options);
-			}else{
-				$sth = parent::query($query);
-			}
+			$sth = parent::query(str_replace('::', $config['db']['prefix'], $query));
 		}catch(PDOException $e){
 			if($this->debug){
 				throw new PDOException($e);
