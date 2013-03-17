@@ -7,13 +7,19 @@ class Admin extends \Hawalius\Controller{
 		if(\Hawalius\Auth::guest()){
 			redirect('/admin/login');
 		}
+		echo 'loggedin';
 	}
 	public function login(){
-		if(!isset($_SERVER['PHP_AUTH_USER'])){
-			header('WWW-Authenticate: Basic realm="Hawalius"');
-			http_response_code(401);
+		if(!\Hawalius\Auth::guest()){
+			redirect('/admin');
+		}
+		
+		if(!isset($_POST['username']) || !isset($_POST['password'])){
+			$this->view->render('admin/login.html');
 		}else{
-			if(\Hawalius\Auth::login($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW'])){
+			$username = $_POST['username'];
+			$password = $_POST['password'];
+			if(\Hawalius\Auth::login($username, $password)){
 				redirect('/admin');
 			}else{
 				echo 'Wrong username or password!';
