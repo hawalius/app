@@ -29,4 +29,9 @@ class Auth{
 		}
 		return false;
 	}
+	
+	public static function logout(){
+		@session_destroy();
+		redirect('/admin');
+	}
 }

@@ -9,6 +9,7 @@ class Admin extends \Hawalius\Controller{
 		}
 		echo 'loggedin';
 	}
+	
 	public function login(){
 		if(!\Hawalius\Auth::guest()){
 			redirect('/admin');
@@ -25,5 +26,9 @@ class Admin extends \Hawalius\Controller{
 				echo 'Wrong username or password!';
 			}
 		}
+	}
+	
+	public function logout(){
+		\Hawalius\Auth::logout();
 	}
 }
