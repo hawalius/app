@@ -3,11 +3,33 @@ namespace Hawalius\Controllers;
 
 require HAWALIUS_PATH . '/app/libraries/Auth.php';
 class Admin extends \Hawalius\Controller{
+	public function __construct($app = NULL, $view = NULL){
+		parent::__construct($app, $view);
+		
+		$this->view->addFunction('getUser', new \Twig_Function_Function('\\Hawalius\\Auth::get'));
+	}
+
 	public function index(){
 		if(\Hawalius\Auth::guest()){
 			redirect('/admin/login');
+		}else{
+			redirect('/admin/posts');
 		}
-		echo 'loggedin';
+	}
+	
+	public function posts(){
+		if(\Hawalius\Auth::guest()){
+			redirect('/admin');
+		}
+		$this->view->render('admin/posts.html');
+	}
+	
+	public function write(){
+		
+	}
+	
+	public function manage(){
+		
 	}
 	
 	public function login(){

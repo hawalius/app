@@ -7,6 +7,10 @@ class Auth{
 		return isset($_SESSION['user']) == false;
 	}
 	
+	public static function get(){
+		return isset($_SESSION['user']) ? $_SESSION['user'][0] : array();
+	}
+	
 	public static function login($username, $password){
 		global $DB;
 		$crypt = new \PasswordLib\PasswordLib;
