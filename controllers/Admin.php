@@ -13,23 +13,33 @@ class Admin extends \Hawalius\Controller{
 		if(\Hawalius\Auth::guest()){
 			redirect('/admin/login');
 		}else{
-			redirect('/admin/posts');
+			$this->view->render('admin/loggedin.html');
 		}
-	}
-	
-	public function posts(){
-		if(\Hawalius\Auth::guest()){
-			redirect('/admin');
-		}
-		$this->view->render('admin/posts.html');
 	}
 	
 	public function write(){
+		if(\Hawalius\Auth::guest()){
+			redirect('/admin');
+		}
 		
+		$post = $this->app->getModel('post');
+		if(isset($_POST['title']) && isset($_POST['content'])){
+			if(isset($_POST['url'])){
+				$url = $_POST['url'];
+			}else{
+				// Do more with the title to make it an valid url, later
+				$url = urlencode($_POST['title']);
+			}
+			$post->write($_POST['title'], $_POST['content'], $url);
+		}
+		
+		$this->view->render('admin/write.html');
 	}
 	
 	public function manage(){
-		
+		if(\Hawalius\Auth::guest()){
+			redirect('/admin');
+		}
 	}
 	
 	public function login(){

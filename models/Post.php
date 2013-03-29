@@ -14,4 +14,14 @@ class Post extends \Hawalius\Model{
 		$stmt->bindParam('id', $id, PDO::PARAM_INT);
 		return $stmt->fetch(PDO::FETCH_ASSOC);
 	}
+	
+	public function write($title, $content, $url, $author = 0){
+		global $DB;
+		$DB->prepare('INSERT ::posts SET title = :title, content = :content, url = :url');
+		$stmt->bindParam('title', $title, PDO::PARAM_STR);
+		$stmt->bindParam('content', $content, PDO::PARAM_STR);
+		$stmt->bindParam('url', $url, PDO::PARAM_STR);
+		$stmt->bindParam('author', $author, PDO::PARAM_STR);
+		return $stmt;
+	}
 }
