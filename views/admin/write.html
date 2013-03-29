@@ -1,0 +1,15 @@
+{% extends "admin/base.html" %}
+{% block content %}
+<form method="post" enctype="multipart/form-data" id="post_form">
+	<header>
+		<h1>Write new post</h1>
+		<input type="text" name="title" placeholder="Post title" autocomplete="off">
+	</header>
+	<section>
+		<textarea name="content" placeholder="Your post content"></textarea>
+	</section>
+	<footer>
+		<input type="submit" value="Publish" />
+	</footer>
+</form>
+{% endblock %}

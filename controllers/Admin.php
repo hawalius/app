@@ -30,7 +30,9 @@ class Admin extends \Hawalius\Controller{
 				// Do more with the title to make it an valid url, later
 				$url = urlencode($_POST['title']);
 			}
-			$post->write($_POST['title'], $_POST['content'], $url);
+			if($post->write($_POST['title'], $_POST['content'], $url)){
+				redirect('/admin/manage');
+			}
 		}
 		
 		$this->view->render('admin/write.html');
