@@ -8,7 +8,7 @@ class Auth{
 	}
 	
 	public static function get(){
-		return isset($_SESSION['user']) ? $_SESSION['user'][0] : array();
+		return isset($_SESSION['user']) ? $_SESSION['user'] : array();
 	}
 	
 	public static function login($username, $password){
@@ -22,12 +22,11 @@ class Auth{
 		if($user && $user['password']){
 			$isGood = $crypt->verifyPasswordHash($password, $user['password']);
 			if($isGood){
-				$_SESSION['user'] = array();
-				array_push($_SESSION['user'], array(
+				$_SESSION['user'] = array(
 					'id' => $user['id'],
 					'username' => $user['username'],
 					'type' => $user['type']
-				));
+				);
 				return true;
 			}
 		}
