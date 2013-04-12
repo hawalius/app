@@ -59,6 +59,10 @@ class Admin extends \Hawalius\Controller{
 			}else{
 				redirect('/admin/write');
 			}
+		}else if($type == 'delete'){
+			if($id){
+				$p = $post->delete($id);
+			}
 		}else{
 			$posts = $post->many(0);
 
