@@ -45,19 +45,20 @@ class Admin extends \Hawalius\Controller{
 		
 		$post = $this->app->getModel('post');
 		if($type == 'post'){
-			if(isset($_POST['title']) && isset($_POST['content'])){
-				if(isset($_POST['url'])){
-					$url = $_POST['url'];
-				}else{
-					// Do more with the title to make it an valid url, later
-					$url = urlencode($_POST['title']);
+			$p = $post->single($id);
+			if(is_array($p)){
+				if(isset($_POST['title']) && isset($_POST['content'])){
+					if($post->edit($id, $_POST['title'], $_POST['content'], $p->url)){
+						redirect('/admin/manage');
+					}
 				}
-				if($post->edit($id, $_POST['title'], $_POST['content'], $url)){
-					redirect('/admin/manage');
-				}
+				
+				$this->view->render('admin/edit.html', array(
+					'post' => $p
+				));
+			}else{
+				redirect('/admin/write');
 			}
-			
-			$this->view->render('admin/edit.html');
 		}else{
 			$posts = $post->many(0);
 
