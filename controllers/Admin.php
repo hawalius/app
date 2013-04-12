@@ -44,7 +44,7 @@ class Admin extends \Hawalius\Controller{
 		}
 		
 		$post = $this->app->getModel('post');
-		if($type == 'post'){
+		if($type == 'edit'){
 			$p = $post->single($id);
 			if(is_array($p)){
 				if(isset($_POST['title']) && isset($_POST['content'])){
