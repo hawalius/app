@@ -48,7 +48,7 @@ class Admin extends \Hawalius\Controller{
 			$p = $post->single($id);
 			if(is_array($p)){
 				if(isset($_POST['title']) && isset($_POST['content'])){
-					if($post->edit($id, $_POST['title'], $_POST['content'], $p->url)){
+					if($post->edit($id, $_POST['title'], $_POST['content'], $p['url'])){
 						redirect('/admin/manage');
 					}
 				}
