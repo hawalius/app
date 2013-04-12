@@ -38,9 +38,32 @@ class Admin extends \Hawalius\Controller{
 		$this->view->render('admin/write.html');
 	}
 	
-	public function manage(){
+	public function manage($type = '', $id = 0){
 		if(\Hawalius\Auth::guest()){
 			redirect('/admin');
+		}
+		
+		$post = $this->app->getModel('post');
+		if($type == 'post'){
+			if(isset($_POST['title']) && isset($_POST['content'])){
+				if(isset($_POST['url'])){
+					$url = $_POST['url'];
+				}else{
+					// Do more with the title to make it an valid url, later
+					$url = urlencode($_POST['title']);
+				}
+				if($post->edit($id, $_POST['title'], $_POST['content'], $url)){
+					redirect('/admin/manage');
+				}
+			}
+			
+			$this->view->render('admin/edit.html');
+		}else{
+			$posts = $post->many(0);
+
+			$this->view->render('admin/manage.html', array(
+				'posts' => $posts
+			));
 		}
 	}
 	

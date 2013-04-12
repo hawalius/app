@@ -1,5 +1,8 @@
 {% extends "admin/base.html" %}
 {% set user = getUser() %}
+{% block header %}
+<p><a href="/admin">Admin</a> > Home</p>
+{% endblock %}
 {% block content %}
 <h1>Hello {{ user.username }},</h1>
 <h3 id="admin-text">Do you want to <a href="/admin/write">write</a> a new post, or <a href="/admin/manage">manage</a> your existing ones?</h3>
