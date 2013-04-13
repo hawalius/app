@@ -24,12 +24,7 @@ class Admin extends \Hawalius\Controller{
 		
 		$post = $this->app->getModel('post');
 		if(isset($_POST['title']) && isset($_POST['content'])){
-			if(isset($_POST['url'])){
-				$url = $_POST['url'];
-			}else{
-				// Do more with the title to make it an valid url, later
-				$url = urlencode($_POST['title']);
-			}
+			$url = slugify($_POST['title']);
 			if($post->write($_POST['title'], $_POST['content'], $url)){
 				redirect('/admin/manage');
 			}
