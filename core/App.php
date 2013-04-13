@@ -40,7 +40,7 @@ class App{
 		if(method_exists($className, $method) && is_callable(array($className, $method))){
 			call_user_func_array(array($controller, $method), $request);
 		}else{
-			$controller->index();
+			call_user_func_array(array($controller, 'index'), $request);
 		}
 	}
 	

@@ -20,6 +20,16 @@ class Post extends \Hawalius\Model{
 		return $stmt->fetch(\PDO::FETCH_ASSOC);
 	}
 	
+	public function url($url = ''){
+		global $DB;
+		
+		$stmt = $DB->prepare("SELECT * from ::posts WHERE url = :url");
+		$stmt->bindParam('url', $url, \PDO::PARAM_STR);
+		$stmt->execute();
+		
+		return $stmt->fetch(\PDO::FETCH_ASSOC);
+	}
+	
 	public function write($title, $content, $url, $author = 0){
 		global $DB;
 		
