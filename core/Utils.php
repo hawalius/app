@@ -23,12 +23,10 @@ function isExternal($url){
 	$baseUrlHost = parse_url($_SERVER['SERVER_NAME'], PHP_URL_HOST);
 	return $urlHost !== $baseUrlHost || !empty($urlHost);
 }
-/* https://github.com/idiot/feather/blob/master/feather/classes/url.php */
-function slugify($url){
-	$url = trim($url, '-');
-	$url = iconv('utf-8', 'us-ascii//TRANSLIT', $url);
-	$url = strtolower($url);
-	$url = preg_replace('/[^-\w]+/', '', $url);
-        
-	return $url;
+function slug($str, $separator = '-') {
+	$str = iconv('utf-8', 'us-ascii//TRANSLIT', $str);
+	// replace non letter or digits by separator
+	$str = preg_replace('#[^\\pL\d]+#u', $separator, $str);
+
+	return trim(strtolower($str), $separator);
 }
