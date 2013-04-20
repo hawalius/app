@@ -6,10 +6,14 @@ class DB extends PDO{
 
 	public $connected = false;
 	private $debug = true;
+	private $prefix;
 
 	public function __construct(){
 		global $config;
 		$dsn = sprintf('%s:dbname=%s;host=%s;charset=UTF-8', $config['db']['type'], $config['db']['database'], $config['db']['host']);
+		
+		$this->prefix = $config['db']['prefix'];
+		
 		try{
 			parent::__construct($dsn, $config['db']['username'], $config['db']['password'], array(
 				PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
@@ -24,7 +28,7 @@ class DB extends PDO{
 	public function prepare($query, $options = array()){
 		global $config;
 		try{
-			$sth = parent::prepare(str_replace('::', $config['db']['prefix'], $query), $options);
+			$sth = parent::prepare(str_replace('::', $this->prefix, $query), $options);
 		}catch(PDOException $e){
 			if($this->debug){
 				throw new PDOException($e);
@@ -37,7 +41,7 @@ class DB extends PDO{
 	public function query($query){
 		global $config;
 		try{
-			$sth = parent::query(str_replace('::', $config['db']['prefix'], $query));
+			$sth = parent::query(str_replace('::', $this->prefix, $query));
 		}catch(PDOException $e){
 			if($this->debug){
 				throw new PDOException($e);

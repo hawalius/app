@@ -32,6 +32,9 @@ try{
 	require HAWALIUS_PATH . '/app/core/View.php';
 	require HAWALIUS_PATH . '/app/core/Utils.php';
 	
+	require HAWALIUS_PATH . '/app/libraries/Plugins.php';
+	require HAWALIUS_PATH . '/app/libraries/Plugin.php';
+	
 	if(file_exists(HAWALIUS_PATH . '/config.php')){
 		require HAWALIUS_PATH . '/config.php';
 	}else{
@@ -40,6 +43,9 @@ try{
 	}
 	
 	$DB = new DB();
+	$Plugins = new Plugins;
+	
+	$Plugins->init();
 	
 	$twig = loadTwig();
 	

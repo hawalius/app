@@ -30,3 +30,8 @@ function slug($str, $separator = '-') {
 
 	return trim(strtolower($str), $separator);
 }
+function hook($name, $value){
+	global $Plugins;
+	
+	return $Plugins->hook($name, $value);
+}
