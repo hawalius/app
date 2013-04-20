@@ -8,7 +8,7 @@ class Plugins{
 		global $config;
 		
 		$plugins = $config['plugins'];
-		foreach($plugins as $plugin => $config){
+		foreach($plugins as $plugin => $conf){
 			$path = HAWALIUS_PATH . '/plugins/' . strtolower($plugin) . '/plugin.php';
 			
 			if(file_exists($path)){
@@ -16,13 +16,13 @@ class Plugins{
 			}
 			
 			$class = new \ReflectionClass('\\Hawalius\\Plugins\\' . $plugin);
-			$plugin = $class->newInstanceArgs($config);
+			$plugin = $class->newInstanceArgs(array($conf));
 			
 			array_push($this->plugins, $plugin);
 		}
 	}
 	
-	public function hook($name, $value){
+	public function hook($name, $value = ''){
 		$plugins = $this->plugins;
 		foreach($plugins as $plugin){
 			if(method_exists($plugin, $name)){
