@@ -6,7 +6,7 @@
 	<meta charset="utf8" />
 	<link href="{{ asset_url }}/css/normalize.css" rel="stylesheet" />
 	<link href="{{ asset_url }}/css/style.css" rel="stylesheet" />
-	<link href="{{ asset_url }}/css/admin.css" rel="stylesheet" />
+	<link href="/app/views/admin/assets/css/admin.css" rel="stylesheet" />
 {% for stylesheet in stylesheets %}
 	<link href="{{ asset_url }}/css/{{stylesheet}}" rel="stylesheet" />
 {% endfor %}
@@ -15,8 +15,8 @@
 		<style type="text/css">header,nav,section,article,aside,footer,hgroup,main { display: block;}</style>
 		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 	<![endif]-->
-	<script src="{{ asset_url }}/epiceditor/js/epiceditor.min.js"></script>
-	<script src="{{ asset_url }}/scripts/editor.js"></script>
+	<script src="/app/views/admin/epiceditor/js/epiceditor.min.js"></script>
+	<script src="/app/views/admin/scripts/editor.js"></script>
 </head>
 <body>
 <div id="wrapper">
