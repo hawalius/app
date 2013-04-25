@@ -58,11 +58,25 @@ class Admin extends \Hawalius\Controller{
 			if($id){
 				$p = $post->delete($id);
 			}
-		}else{
+		}else if($type == 'pages'){
+			$pages = $page->many(0);
+
+			$this->view->render('admin/manage.html', array(
+				'pages' => $pages
+			));
+		}else if($type == 'posts'){
 			$posts = $post->many(0);
 
 			$this->view->render('admin/manage.html', array(
 				'posts' => $posts
+			));
+		}else{
+			$posts = $post->many(0);
+			//$pages = $page->many(0);
+
+			$this->view->render('admin/manage.html', array(
+				'posts' => $posts,
+				//'pages' => $pages
 			));
 		}
 	}

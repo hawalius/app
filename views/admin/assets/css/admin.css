@@ -4,8 +4,21 @@
 	min-width: 300px;
 	margin: 0 auto;
 }
-#top {
-	font-size: small;
+#top nav {
+	padding: 3em 0;
+}
+#top nav a {
+	float: left;
+	padding-right: 60px;
+	color: #999;
+}
+#top nav a.logo {	
+	float: left;
+	padding-right: 60px;
+	color: #000;
+	font-weight: bold;
+	font-size: 150%;
+	text-decoration: none;
 }
 ul {
 	list-style-type: none;
