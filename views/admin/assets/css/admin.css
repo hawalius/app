@@ -20,6 +20,19 @@
 	font-size: 150%;
 	text-decoration: none;
 }
+/* Widgets */
+.widget {
+}
+#widget_clock {
+	font-size: 250%;
+}
+#widget_clock .time {
+	padding-bottom: 10px;
+}
+#widget_clock .date {
+	color: #bbb;
+	font-size: 66%;
+}
 ul {
 	list-style-type: none;
 }

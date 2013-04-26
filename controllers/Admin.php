@@ -10,10 +10,16 @@ class Admin extends \Hawalius\Controller{
 	}
 
 	public function index(){
+		$post = $this->app->getModel('post');
 		if(\Hawalius\Auth::guest()){
 			redirect('/admin/login');
 		}else{
-			$this->view->render('admin/loggedin.html');
+			$totalposts = $post->num();
+			$totalpages = 0;
+			$this->view->render('admin/loggedin.html', array(
+				'posts' => array('total' => $totalposts, 'published' => $totalposts),
+				'pages' => array('total' => $totalpages, 'published' => $totalpages )
+			));
 		}
 	}
 	

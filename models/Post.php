@@ -30,6 +30,15 @@ class Post extends \Hawalius\Model{
 		return $stmt->fetch(\PDO::FETCH_ASSOC);
 	}
 	
+	public function num(){
+		global $DB;
+	
+		$stmt = $DB->prepare("SELECT id from ::posts ");
+		$stmt->execute();
+		
+		return $stmt->rowCount();
+	}
+	
 	public function write($title, $content, $url, $author = 0){
 		global $DB;
 		

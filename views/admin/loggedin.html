@@ -1,9 +1,22 @@
 {% extends "admin/base.html" %}
 {% set user = getUser() %}
 {% block content %}
-<h1>Hello {{ user.username }},</h1>
-<h3 id="admin-text">Do you want to <a href="/admin/write">write</a> a new post, or <a href="/admin/manage">manage</a> your existing ones?</h3>
-<div style="padding-top: 50px;">
-	<p>No thanks, i want to <a href="/admin/logout">logout</a>.</p>
+<div id="widgets" class="grid">
+	<div class="col-1-1">
+		<div class="widget" id="widget_welcome">
+			<h1>Welcome back, {{ user.username }}.</h1>
+		</div>
+	</div>
+	<div class="col-1-2">
+		<div class="widget" id="widget_clock"></div>
+	</div>
+	<div class="col-1-2">
+		<div class="widget" id="widget_total">
+			<h4>Posts</h4>
+			<p>{{ posts.published }} published of {{ posts.total }} total</p>
+			<h4>Pages</h4>
+			<p>{{ pages.published }} published of {{ pages.total }} total</p>
+		</div>
+	</div>
 </div>
 {% endblock %}
