@@ -1,8 +1,9 @@
 {% set asset_url = getAssetUrl() %}
+{% set blog_name = getBlogInfo().name %}
 <!doctype html>
 <html>
 <head>
-	<title>{{ blog_name }}{% if prefix %} - {{ prefix }} {% endif %}</title>
+	<title>{% if prefix %}{{ prefix }}{% endif %} &lsaquo; {{ blog_name }} &#8212; Hawalius</title>
 	<meta charset="utf8" />
 	<link href="{{ asset_url }}/css/normalize.css" rel="stylesheet" />
 	<link href="{{ asset_url }}/css/style.css" rel="stylesheet" />

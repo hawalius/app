@@ -18,7 +18,7 @@ class Admin extends \Hawalius\Controller{
 			$totalpages = 0;
 			$this->view->render('admin/loggedin.html', array(
 				'posts' => array('total' => $totalposts, 'published' => $totalposts),
-				'pages' => array('total' => $totalpages, 'published' => $totalpages )
+				'pages' => array('total' => $totalpages, 'published' => $totalpages)
 			));
 		}
 	}
