@@ -21,12 +21,14 @@
 <body>
 <div id="wrapper">
 	<header id="top">
+		{% if getUser() %}
 		<nav class="menu" role="navigation">
 			<a href="/admin" class="logo">HW</a>
 			<a href="/admin/manage/posts">Posts</a>
 			<a href="/admin/manage/pages">Pages</a>
 			<a href="/admin/settings">Settings</a>
 		</nav>
+		{% endif %}
 	</header>
 	<main>
 		<div id="content">
