@@ -1,10 +1,20 @@
 {% extends "admin/base.html" %}
 {% set prefix = 'Manage posts' %}
 {% block content %}
+{% if posts %}
 <h1>Posts</h1>
 <ul id="posts">
 	{% for post in posts %}
 		<li><h2><a href="/admin/manage/edit/{{ post.id }}">{{ post.title }}</a></h2></li>
 	{% endfor %}
 </ul>
+{% endif %}
+{% if pages %}
+<h1>Pages</h1>
+<ul id="pages">
+	{% for page in pages %}
+		<li><h2><a href="/admin/manage/edit/{{ page.id }}">{{ page.title }}</a></h2></li>
+	{% endfor %}
+</ul>
+{% endif %}
 {% endblock %}

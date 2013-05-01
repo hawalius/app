@@ -11,11 +11,12 @@ class Admin extends \Hawalius\Controller{
 
 	public function index(){
 		$post = $this->app->getModel('post');
+		$page = $this->app->getModel('page');
 		if(\Hawalius\Auth::guest()){
 			redirect('/admin/login');
 		}else{
 			$totalposts = $post->num();
-			$totalpages = 0;
+			$totalpages = $page->num();
 			$this->view->render('admin/loggedin.html', array(
 				'posts' => array('total' => $totalposts, 'published' => $totalposts),
 				'pages' => array('total' => $totalpages, 'published' => $totalpages)
@@ -45,6 +46,7 @@ class Admin extends \Hawalius\Controller{
 		}
 		
 		$post = $this->app->getModel('post');
+		$page = $this->app->getModel('page');
 		if($type == 'edit'){
 			$p = $post->single($id);
 			if(is_array($p)){
@@ -78,11 +80,11 @@ class Admin extends \Hawalius\Controller{
 			));
 		}else{
 			$posts = $post->many(0);
-			//$pages = $page->many(0);
+			$pages = $page->many(0);
 
 			$this->view->render('admin/manage.html', array(
 				'posts' => $posts,
-				//'pages' => $pages
+				'pages' => $pages
 			));
 		}
 	}
