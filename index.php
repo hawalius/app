@@ -30,6 +30,7 @@ $routes = array(
 	'/admin' => 'admin',
 	'/admin/login' => 'admin#login',
 	'/admin/manage' => 'admin#manage',
+	'/admin/settings' => 'admin#settings',
 	'/admin/logout' => 'admin#logout'
 );
 

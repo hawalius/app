@@ -32,6 +32,7 @@ class App{
 					if($v == ':action'){
 						$_route = array_slice($request, 0, $i);
 						$_route[$i - 1] = ':action';
+						$_params = array_slice($request, $i - 1);
 						break;
 					}
 					$i++;
@@ -43,6 +44,7 @@ class App{
 				$_r = '/' . implode('/', $_route);
 				if(preg_match('#^' . $key . '$#', $_r)){
 					$r = $_r;
+					$params = $_params;
 				}
 			}
 			
