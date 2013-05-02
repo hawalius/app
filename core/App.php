@@ -5,14 +5,11 @@ class App{
 	public $_controller, $_method;
 	
 	public function __construct($view, $routes){
-		global $config;
 		$this->view = $view;
 		$this->routes = $routes;
 	}
 
 	public function run(){
-		global $config;
-
 		$uri = $_SERVER['REQUEST_URI'];
 		$request = explode('/', trim($uri, '/'));
 		
