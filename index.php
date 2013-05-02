@@ -24,6 +24,15 @@ ob_start();
 
 date_default_timezone_set('Europe/Paris');
 
+$routes = array(
+	'/' => 'index',
+	'/post/:action' => 'post#view',
+	'/admin' => 'admin',
+	'/admin/login' => 'admin#login',
+	'/admin/manage' => 'admin#manage',
+	'/admin/logout' => 'admin#logout'
+);
+
 try{
 	require HAWALIUS_PATH . '/app/core/DB.php';
 	require HAWALIUS_PATH . '/app/core/App.php';
@@ -49,7 +58,7 @@ try{
 	
 	$twig = loadTwig();
 	
-	$app = new App($twig);
+	$app = new App($twig, $routes);
 	spl_autoload_register(array($app, 'autoload'));
 	$app->run();
 }catch(\Exception $e){

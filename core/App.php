@@ -4,31 +4,75 @@ namespace Hawalius;
 class App{
 	public $_controller, $_method;
 	
-	public function __construct($view){
+	public function __construct($view, $routes){
 		global $config;
 		$this->view = $view;
+		$this->routes = $routes;
 	}
 
-	public function run($route = NULL){
+	public function run(){
 		global $config;
 
-		$route = $_SERVER['REQUEST_URI'];
-		$request = explode('/', trim($route, '/'));
-        
-		if(!empty($request[0])){
-			$this->_controller = $request[0];
+		$uri = $_SERVER['REQUEST_URI'];
+		$request = explode('/', trim($uri, '/'));
+		
+		if(count($request) > 2){
+			$route = array_slice($request, 0, 2);
 		}else{
-			$this->_controller = 'index';
+			$route = $request;
 		}
-		array_shift($request);
+		$params = array_slice($request, 2);
+		
+		foreach($this->routes as $key => $val){		
 
-		if(!empty($request[0])){
-			$this->_method = $request[0];
-		}else{
+			if(strpos($key, ':action') !== false){
+				$k = explode('/', $key);
+				$i = 0;
+				
+				foreach($k as $v){
+					if($v == ':action'){
+						$_route = array_slice($request, 0, $i);
+						$_route[$i - 1] = ':action';
+						break;
+					}
+					$i++;
+				}
+			}
+			
+			$r = '/' . implode('/', $route);
+			if(isset($_route)){
+				$_r = '/' . implode('/', $_route);
+				if(preg_match('#^' . $key . '$#', $_r)){
+					$r = $_r;
+				}
+			}
+			
+			if(preg_match('#^' . $key . '$#', $r)){
+				$matches = preg_split('/#/', $val);
+				
+				if(isset($matches[0])){
+					$this->_controller = $matches[0];
+				}else{
+					$this->_controller = 'index';
+				}
+				
+				if(isset($matches[1])){
+					$this->_method = $matches[1];
+				}else{
+					$this->_method = 'index';
+				}
+			}
+				
+		}
+		
+		if(!isset($this->_controller)){
+			$this->_controller = 'FourOhFour';
+		}
+		
+		if(!isset($this->_method)){
 			$this->_method = 'index';
 		}
-		array_shift($request);
-
+		
 		$className = 'Hawalius\\Controllers\\' . ucfirst($this->_controller);
 		if(!class_exists($className)){
 			$className = 'Hawalius\\Controllers\\FourOhFour';
@@ -36,12 +80,12 @@ class App{
 
 		$controller = new $className($this, $this->view);
 		$method = $this->_method;
-		
+
 		if(method_exists($className, $method) && is_callable(array($className, $method))){
-			call_user_func_array(array($controller, $method), $request);
+			call_user_func_array(array($controller, $method), $params);
 		}else{
-			call_user_func_array(array($controller, 'index'), $request);
-		}
+			call_user_func_array(array($controller, 'index'), $params);
+		}	
 	}
 	
 	public function autoload($className){
