@@ -24,7 +24,6 @@ class App{
 		$params = array_slice($request, 2);
 		
 		foreach($this->routes as $key => $val){		
-
 			if(strpos($key, ':action') !== false){
 				$k = explode('/', $key);
 				$i = 0;
