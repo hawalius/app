@@ -3,6 +3,7 @@
 {% block content %}
 {% if showPosts %}
 <h1>Posts</h1>
+<a href="/admin/posts/write">Write new post</a>
 <ul id="posts">
 	{% for post in posts %}
 		<li><h2><a href="/admin/posts/edit/{{ post.id }}">{{ post.title }}</a></h2></li>
@@ -11,6 +12,7 @@
 {% endif %}
 {% if showPages %}
 <h1>Pages</h1>
+<a href="/admin/pages/write">Create new page</a>
 <ul id="pages">
 	{% for page in pages %}
 		<li><h2><a href="/admin/pages/edit/{{ page.id }}">{{ page.title }}</a></h2></li>
