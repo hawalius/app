@@ -24,68 +24,106 @@ class Admin extends \Hawalius\Controller{
 		}
 	}
 	
-	public function write(){
+	public function posts($type = '', $id = 0){
 		if(\Hawalius\Auth::guest()){
 			redirect('/admin');
 		}
 		
 		$post = $this->app->getModel('post');
-		if(isset($_POST['title']) && isset($_POST['content'])){
-			$url = slug($_POST['title']);
-			if($post->write($_POST['title'], $_POST['content'], $url)){
-				redirect('/admin/manage');
-			}
-		}
 		
-		$this->view->render('admin/write.html');
-	}
-	
-	public function manage($type = '', $id = 0){
-		if(\Hawalius\Auth::guest()){
-			redirect('/admin');
-		}
-		
-		$post = $this->app->getModel('post');
-		$page = $this->app->getModel('page');
-		if($type == 'edit'){
-			$p = $post->single($id);
-			if(is_array($p)){
+		switch($type){
+			case 'write':
 				if(isset($_POST['title']) && isset($_POST['content'])){
-					if($post->edit($id, $_POST['title'], $_POST['content'], $p['url'])){
-						redirect('/admin/manage');
+					$url = slug($_POST['title']);
+					if($post->write($_POST['title'], $_POST['content'], $url)){
+						redirect('/admin/posts');
 					}
 				}
-				
-				$this->view->render('admin/edit.html', array(
-					'post' => $p
+				$this->view->render('admin/writepost.html');
+			break;
+			case 'edit':
+				$p = $post->single($id);
+				if(is_array($p)){
+					if(isset($_POST['title']) && isset($_POST['content'])){
+						if($post->edit($id, $_POST['title'], $_POST['content'], $p['url'])){
+							redirect('/admin/posts');
+						}
+					}
+					
+					$this->view->render('admin/editpost.html', array(
+						'post' => $p
+					));
+				}else{
+					redirect('/admin/posts/write');
+				}
+			break;
+			
+			case 'delete':
+				if($id){
+					$p = $post->delete($id);
+				}
+			break;
+			
+			default:
+				$posts = $post->many(0);
+
+				$this->view->render('admin/manage.html', array(
+					'posts' => $posts,
+					'showPosts' => 1
 				));
-			}else{
-				redirect('/admin/write');
-			}
-		}else if($type == 'delete'){
-			if($id){
-				$p = $post->delete($id);
-			}
-		}else if($type == 'pages'){
-			$pages = $page->many(0);
+			break;
+		}
+		
+	}
+	
+	public function pages($type = '', $id = 0){
+		if(\Hawalius\Auth::guest()){
+			redirect('/admin');
+		}
+		
+		$page = $this->app->getModel('page');
+		
+		switch($type){
+			case 'write':
+				if(isset($_POST['title']) && isset($_POST['content'])){
+					$url = slug($_POST['title']);
+					if($post->write($_POST['title'], $_POST['content'], $url)){
+						redirect('/admin/posts');
+					}
+				}
+				$this->view->render('admin/writepage.html');
+			break;
+			case 'edit':
+				$p = $page->single($id);
+				if(is_array($p)){
+					if(isset($_POST['title']) && isset($_POST['content'])){
+						if($page->edit($id, $_POST['title'], $_POST['content'], $p['url'])){
+							redirect('/admin/pages');
+						}
+					}
+					
+					$this->view->render('admin/editpage.html', array(
+						'post' => $p
+					));
+				}else{
+					redirect('/admin/pages/write');
+				}
+			break;
+			
+			case 'delete':
+				if($id){
+					$p = $page->delete($id);
+				}
+			break;
+			
+			default:
+				$pages = $page->many(0);
 
-			$this->view->render('admin/manage.html', array(
-				'pages' => $pages
-			));
-		}else if($type == 'posts'){
-			$posts = $post->many(0);
-
-			$this->view->render('admin/manage.html', array(
-				'posts' => $posts
-			));
-		}else{
-			$posts = $post->many(0);
-			$pages = $page->many(0);
-
-			$this->view->render('admin/manage.html', array(
-				'posts' => $posts,
-				'pages' => $pages
-			));
+				$this->view->render('admin/manage.html', array(
+					'pages' => $pages,
+					'showPages' => 1
+				));
+			break;
 		}
 	}
 	

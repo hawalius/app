@@ -1,0 +1,17 @@
+{% extends "admin/base.html" %}
+{% set prefix = 'Write post' %}
+{% block content %}
+<form method="post" enctype="multipart/form-data" id="post_form">
+	<header>
+		<h1>Write new page</h1>
+		<input type="text" name="title" placeholder="Page title" autocomplete="off">
+	</header>
+	<section>
+		<div id="editor"></div>
+		 <textarea name="content" placeholder="Your page content"></textarea>
+	</section>
+	<footer>
+		<input type="submit" value="Publish" />
+	</footer>
+</form>
+{% endblock %}

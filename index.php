@@ -29,7 +29,8 @@ $routes = array(
 	'/post/:action' => 'post#view',
 	'/admin' => 'admin',
 	'/admin/login' => 'admin#login',
-	'/admin/manage' => 'admin#manage',
+	'/admin/posts' => 'admin#posts',
+	'/admin/pages' => 'admin#pages',
 	'/admin/settings' => 'admin#settings',
 	'/admin/logout' => 'admin#logout'
 );
