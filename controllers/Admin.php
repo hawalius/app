@@ -87,8 +87,8 @@ class Admin extends \Hawalius\Controller{
 			case 'write':
 				if(isset($_POST['title']) && isset($_POST['content'])){
 					$url = slug($_POST['title']);
-					if($post->write($_POST['title'], $_POST['content'], $url)){
-						redirect('/admin/posts');
+					if($page->write($_POST['title'], $_POST['content'], $url)){
+						redirect('/admin/pages');
 					}
 				}
 				$this->view->render('admin/writepage.html');
