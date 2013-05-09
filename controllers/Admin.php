@@ -65,7 +65,7 @@ class Admin extends \Hawalius\Controller{
 			break;
 			
 			default:
-				$posts = $post->many(0);
+				$posts = $post->many(0, true);
 
 				$this->view->render('admin/manage.html', array(
 					'posts' => $posts,

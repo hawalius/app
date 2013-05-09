@@ -2,12 +2,20 @@
 namespace Hawalius\Models;
 
 class Post extends \Hawalius\Model{
-	public function many($limit = 10){
+	public function many($limit = 10, $showDrafts = false){
 		global $DB;
 		
-		$result = $DB->query('SELECT * from ::posts ORDER by time DESC');
+		$query = 'SELECT * from ::posts ';
+		if(!$showDrafts){
+			$query .= 'WHERE draft = 0';
+		}
+		$query .= ' ORDER by time DESC';
 		
-		return $result->fetchAll();
+		$stmt = $DB->prepare($query);
+		$stmt->bindParam('limit', $limit, \PDO::PARAM_INT);
+		$stmt->execute();
+		
+		return $stmt->fetchAll();
 	}
 	
 	public function single($id = 0){
@@ -23,8 +31,9 @@ class Post extends \Hawalius\Model{
 	public function url($url = ''){
 		global $DB;
 		
-		$stmt = $DB->prepare("SELECT * from ::posts WHERE url = :url");
+		$stmt = $DB->prepare("SELECT * from ::posts and draft = :draft WHERE url = :url");
 		$stmt->bindParam('url', $url, \PDO::PARAM_STR);
+		$stmt->bindParam('draft', 0, \PDO::PARAM_INT);
 		$stmt->execute();
 		
 		return $stmt->fetch(\PDO::FETCH_ASSOC);
