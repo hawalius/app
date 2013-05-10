@@ -31,9 +31,8 @@ class Post extends \Hawalius\Model{
 	public function url($url = ''){
 		global $DB;
 		
-		$stmt = $DB->prepare("SELECT * from ::posts and draft = :draft WHERE url = :url");
+		$stmt = $DB->prepare("SELECT * from ::posts WHERE url = :url AND draft = 0");
 		$stmt->bindParam('url', $url, \PDO::PARAM_STR);
-		$stmt->bindParam('draft', 0, \PDO::PARAM_INT);
 		$stmt->execute();
 		
 		return $stmt->fetch(\PDO::FETCH_ASSOC);
@@ -42,7 +41,7 @@ class Post extends \Hawalius\Model{
 	public function num(){
 		global $DB;
 	
-		$stmt = $DB->prepare("SELECT id from ::posts ");
+		$stmt = $DB->prepare("SELECT id from ::posts");
 		$stmt->execute();
 		
 		return $stmt->rowCount();
