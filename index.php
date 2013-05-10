@@ -27,6 +27,7 @@ date_default_timezone_set('Europe/Paris');
 $routes = array(
 	'/' => 'index',
 	'/post/:action' => 'post#view',
+	'/page/:action' => 'page#view',
 	'/admin' => 'admin',
 	'/admin/login' => 'admin#login',
 	'/admin/posts' => 'admin#posts',
