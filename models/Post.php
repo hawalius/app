@@ -7,7 +7,7 @@ class Post extends \Hawalius\Model{
 		
 		$query = 'SELECT * from ::posts ';
 		if(!$showDrafts){
-			$query .= 'WHERE draft = 0';
+			$query .= 'WHERE published = 1';
 		}
 		$query .= ' ORDER by time DESC';
 		
@@ -31,7 +31,7 @@ class Post extends \Hawalius\Model{
 	public function url($url = ''){
 		global $DB;
 		
-		$stmt = $DB->prepare("SELECT * from ::posts WHERE url = :url AND draft = 0");
+		$stmt = $DB->prepare("SELECT * from ::posts WHERE url = :url AND published = 1");
 		$stmt->bindParam('url', $url, \PDO::PARAM_STR);
 		$stmt->execute();
 		
