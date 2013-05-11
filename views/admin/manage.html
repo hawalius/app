@@ -16,7 +16,7 @@
 <a href="/admin/pages/write">Create new page</a>
 <ul id="pages">
 	{% for page in pages %}
-		<li><h4><a href="/page/{{ page.url }}" class="title">{{ page.title }}</a></h4><span class="hidden"><a href="/admin/pages/edit/{{ post.id }}" class="small-link edit">edit</a><a href="/admin/pages/delete/{{ post.id }}" class="small-link delete">delete</a></span></li>
+		<li><h4><a href="/page/{{ page.url }}" class="title">{{ page.title }}</a></h4><span class="hidden"><a href="/admin/pages/edit/{{ page.id }}" class="small-link edit">edit</a><a href="/admin/pages/delete/{{ page.id }}" class="small-link delete">delete</a></span></li>
 	{% endfor %}
 </ul>
 {% endif %}
