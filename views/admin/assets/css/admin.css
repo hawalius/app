@@ -36,9 +36,34 @@
 ul {
 	list-style-type: none;
 }
-ul li h2 a {
+ul li h4 {
+	display: inline-block;
+}
+ul li a.title {
 	color: #181818;
+	font-weight: bold;
 	text-decoration: none;
+}
+a.small-link {
+	padding: 6px;
+	font-size: 14px;
+	line-height: 100%;
+}
+a.edit {
+	color: #333;
+}
+a.delete {
+	color: #ff4242;
+}
+.hidden {
+    -webkit-transition: opacity 1s ease-out;
+    opacity: 0; 
+    height: 0;
+    overflow: hidden;
+}
+.hidden:hover {
+    opacity: 1;
+    height: auto;
 }
 input[type="button"], input[type="submit"] {
 	border: 0;

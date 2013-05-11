@@ -1,12 +1,13 @@
 {% extends "admin/base.html" %}
 {% set prefix = 'Manage posts' %}
 {% block content %}
+
 {% if showPosts %}
 <h1>Posts</h1>
 <a href="/admin/posts/write">Write new post</a>
 <ul id="posts">
 	{% for post in posts %}
-		<li><h2><a href="/admin/posts/edit/{{ post.id }}">{{ post.title }}</a></h2></li>
+		<li><h4><a href="/post/{{ post.title }}" class="title">{{ post.title }}</a></h4><span class="hidden"><a href="/admin/posts/edit/{{ post.id }}" class="small-link edit">edit</a><a href="/admin/posts/delete/{{ post.id }}" class="small-link delete">delete</a></span></li>
 	{% endfor %}
 </ul>
 {% endif %}
@@ -15,7 +16,7 @@
 <a href="/admin/pages/write">Create new page</a>
 <ul id="pages">
 	{% for page in pages %}
-		<li><h2><a href="/admin/pages/edit/{{ page.id }}">{{ page.title }}</a></h2></li>
+		<li><h4><a href="/page/{{ post.title }}" class="title">{{ page.title }}</a></h4><span class="hidden"><a href="/admin/pages/edit/{{ post.id }}" class="small-link edit">edit</a><a href="/admin/pages/delete/{{ post.id }}" class="small-link delete">delete</a></span></li>
 	{% endfor %}
 </ul>
 {% endif %}
