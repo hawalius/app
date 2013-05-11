@@ -21,7 +21,7 @@ class Post extends \Hawalius\Model{
 	public function single($id = 0){
 		global $DB;
 		
-		$stmt = $DB->prepare("SELECT * from ::posts WHERE id = :id");
+		$stmt = $DB->prepare('SELECT * from ::posts WHERE id = :id');
 		$stmt->bindParam('id', $id, \PDO::PARAM_INT);
 		$stmt->execute();
 		
@@ -31,7 +31,7 @@ class Post extends \Hawalius\Model{
 	public function url($url = ''){
 		global $DB;
 		
-		$stmt = $DB->prepare("SELECT * from ::posts WHERE url = :url AND published = 1");
+		$stmt = $DB->prepare('SELECT * from ::posts WHERE url = :url AND published = 1');
 		$stmt->bindParam('url', $url, \PDO::PARAM_STR);
 		$stmt->execute();
 		
@@ -41,7 +41,7 @@ class Post extends \Hawalius\Model{
 	public function num(){
 		global $DB;
 	
-		$stmt = $DB->prepare("SELECT id from ::posts");
+		$stmt = $DB->prepare('SELECT id from ::posts');
 		$stmt->execute();
 		
 		return $stmt->rowCount();
@@ -79,7 +79,7 @@ class Post extends \Hawalius\Model{
 	public function delete($id){
 		global $DB;
                 
-		$stmt = $DB->prepare("DELETE from ::posts WHERE id = :id");
+		$stmt = $DB->prepare('DELETE from ::posts WHERE id = :id');
 		$stmt->bindParam('id', $id, \PDO::PARAM_INT);
 		$stmt->execute();
                 

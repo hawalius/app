@@ -7,7 +7,7 @@
 <a href="/admin/posts/write">Write new post</a>
 <ul id="posts">
 	{% for post in posts %}
-		<li><h4><a href="/post/{{ post.title }}" class="title">{{ post.title }}</a></h4><span class="hidden"><a href="/admin/posts/edit/{{ post.id }}" class="small-link edit">edit</a><a href="/admin/posts/delete/{{ post.id }}" class="small-link delete">delete</a></span></li>
+		<li><h4><a href="/post/{{ post.url }}" class="title">{{ post.title }}</a></h4><span class="hidden"><a href="/admin/posts/edit/{{ post.id }}" class="small-link edit">edit</a><a href="/admin/posts/delete/{{ post.id }}" class="small-link delete">delete</a></span></li>
 	{% endfor %}
 </ul>
 {% endif %}
@@ -16,7 +16,7 @@
 <a href="/admin/pages/write">Create new page</a>
 <ul id="pages">
 	{% for page in pages %}
-		<li><h4><a href="/page/{{ post.title }}" class="title">{{ page.title }}</a></h4><span class="hidden"><a href="/admin/pages/edit/{{ post.id }}" class="small-link edit">edit</a><a href="/admin/pages/delete/{{ post.id }}" class="small-link delete">delete</a></span></li>
+		<li><h4><a href="/page/{{ page.url }}" class="title">{{ page.title }}</a></h4><span class="hidden"><a href="/admin/pages/edit/{{ post.id }}" class="small-link edit">edit</a><a href="/admin/pages/delete/{{ post.id }}" class="small-link delete">delete</a></span></li>
 	{% endfor %}
 </ul>
 {% endif %}

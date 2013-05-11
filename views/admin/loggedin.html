@@ -1,6 +1,8 @@
 {% extends "admin/base.html" %}
 {% set user = getUser() %}
 {% set prefix = 'Dashboard' %}
+{% set stylesheets = ['simplegrid.css'] %}
+{% set scripts = ['dashboard.js'] %}
 {% block content %}
 <div id="widgets" class="grid">
 	<div class="col-1-1">

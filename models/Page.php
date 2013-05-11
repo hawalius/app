@@ -13,7 +13,7 @@ class Page extends \Hawalius\Model{
 	public function single($id = 0){
 		global $DB;
 		
-		$stmt = $DB->prepare("SELECT * from ::pages WHERE id = :id");
+		$stmt = $DB->prepare('SELECT * from ::pages WHERE id = :id');
 		$stmt->bindParam('id', $id, \PDO::PARAM_INT);
 		$stmt->execute();
 		
@@ -23,7 +23,7 @@ class Page extends \Hawalius\Model{
 	public function url($url = ''){
 		global $DB;
 		
-		$stmt = $DB->prepare("SELECT * from ::pages WHERE url = :url");
+		$stmt = $DB->prepare('SELECT * from ::pages WHERE url = :url');
 		$stmt->bindParam('url', $url, \PDO::PARAM_STR);
 		$stmt->execute();
 		
@@ -33,7 +33,7 @@ class Page extends \Hawalius\Model{
 	public function num(){
 		global $DB;
 	
-		$stmt = $DB->prepare("SELECT id from ::pages ");
+		$stmt = $DB->prepare('SELECT id from ::pages ');
 		$stmt->execute();
 		
 		return $stmt->rowCount();
@@ -71,7 +71,7 @@ class Page extends \Hawalius\Model{
 	public function delete($id){
 		global $DB;
                 
-		$stmt = $DB->prepare("DELETE from ::pages WHERE id = :id");
+		$stmt = $DB->prepare('DELETE from ::pages WHERE id = :id');
 		$stmt->bindParam('id', $id, \PDO::PARAM_INT);
 		$stmt->execute();
                 
