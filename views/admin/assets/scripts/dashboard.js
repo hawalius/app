@@ -1,13 +1,13 @@
-var Dashboard = {
+Admin.Dashboard = {
 	init: function(){
-		Dashboard.Clock.init();
+		Admin.Dashboard.Clock.init();
 	}
 };
-Dashboard.Clock = {
+Admin.Dashboard.Clock = {
 	init: function(){
-		Dashboard.Clock.update();
+		Admin.Dashboard.Clock.update();
 		setInterval(function(){
-			Dashboard.Clock.update();
+			Admin.Dashboard.Clock.update();
 		}, 1000);
 	},
 	getMonthName: function(date){
@@ -51,5 +51,5 @@ Dashboard.Clock = {
 	}
 };
 document.addEventListener('DOMContentLoaded', function(){
-	Dashboard.init();
+	Admin.Dashboard.init();
 });

@@ -1,0 +1,4 @@
+Admin.Manage = {
+	init: function(){
+	}
+};
