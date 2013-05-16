@@ -2,10 +2,16 @@
 namespace Hawalius\Models;
 
 class Post extends \Hawalius\Model{
-	public function many($limit = 10){
+	public function many($limit = 10, $showDrafts = false){
 		global $DB;
 		
-		$stmt = $DB->query('SELECT * from ::posts ORDER by time DESC');
+		$query = 'SELECT * from ::posts ';
+		if(!$showDrafts){
+			$query .= 'WHERE published = 1';
+		}
+		$query .= ' ORDER by time DESC';
+		
+		$stmt = $DB->query($query);
 		
 		return $stmt->fetchAll();
 	}
@@ -91,6 +97,28 @@ class Post extends \Hawalius\Model{
 		$stmt->bindParam('id', $id, \PDO::PARAM_INT);
 		$stmt->execute();
                 
+		// Return true for now
+		return true;
+	}
+	
+	public function publish($id){
+		global $DB;
+		
+		$stmt = $DB->prepare('UPDATE ::posts SET published = 1 WHERE id = :id');
+		$stmt->bindParam('id', $id, \PDO::PARAM_INT);
+		$stmt->execute();
+		
+		// Return true for now
+		return true;
+	}
+	
+	public function draft($id){
+		global $DB;
+		
+		$stmt = $DB->prepare('UPDATE ::posts SET published = 0 WHERE id = :id');
+		$stmt->bindParam('id', $id, \PDO::PARAM_INT);
+		$stmt->execute();
+		
 		// Return true for now
 		return true;
 	}

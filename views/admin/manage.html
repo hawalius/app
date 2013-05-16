@@ -1,5 +1,12 @@
 {% extends "admin/base.html" %}
+{% if showPosts %} 
 {% set prefix = 'Manage posts' %}
+{% elseif showPages %}
+{% set prefix = 'Manage pages' %}
+{% else %}
+{% set prefix = 'Manage' %}
+{% endif %}
+
 {% set scripts = ['manage.js'] %}
 {% block content %}
 
@@ -9,14 +16,14 @@
 <h2>Drafts</h2>
 <ul id="drafts">
 	{% for post in posts.drafts %}
-		<li><h4><a href="/post/{{ post.url }}" class="title">{{ post.title }}</a></h4><span class="hidden"><a href="/admin/posts/edit/{{ post.id }}" class="small-link edit">edit</a><a href="/admin/posts/delete/{{ post.id }}" class="small-link delete">delete</a></span></li>
+		<li><h4><a href="/post/{{ post.url }}" class="title">{{ post.title }}</a></h4><span class="hidden"><a href="/admin/posts/edit/{{ post.id }}" class="small-link edit">edit</a><a href="/admin/posts/publish/{{ post.id }}" class="small-link publish">publish</a><a href="/admin/posts/delete/{{ post.id }}" class="small-link delete">delete</a></span></li>
 	{% endfor %}
 </ul>
 <h2>Published</h2>
 <ul id="published">
 	{% for post in posts.published %}
 		<li><h4><a href="/post/{{ post.url }}" class="title">{{ post.title }}</a></h4>
-<span class="hidden"><a href="/admin/posts/edit/{{ post.id }}" class="small-link edit">edit</a><a href="/admin/posts/delete/{{ post.id }}" class="small-link delete">delete</a></span></li>
+<span class="hidden"><a href="/admin/posts/edit/{{ post.id }}" class="small-link edit">edit</a><a href="/admin/posts/draft/{{ post.id }}" class="small-link draft">draft</a><a href="/admin/posts/delete/{{ post.id }}" class="small-link delete">delete</a></span></li>
 	{% endfor %}
 </ul>
 {% endif %}
@@ -26,13 +33,13 @@
 <h2>Drafts</h2>
 <ul id="drafts">
 	{% for page in pages.drafts %}
-		<li><h4><a href="/page/{{ page.url }}" class="title">{{ page.title }}</a></h4><span class="hidden"><a href="/admin/pages/edit/{{ page.id }}" class="small-link edit">edit</a><a href="/admin/pages/delete/{{ page.id }}" class="small-link delete">delete</a></span></li>
+		<li><h4><a href="/page/{{ page.url }}" class="title">{{ page.title }}</a></h4><span class="hidden"><a href="/admin/pages/edit/{{ page.id }}" class="small-link edit">edit</a><a href="/admin/pages/publish/{{ page.id }}" class="small-link publish">publish</a><a href="/admin/pages/delete/{{ page.id }}" class="small-link delete">delete</a></span></li>
 	{% endfor %}
 </ul>
 <h2>Published</h2>
 <ul id="published">
 	{% for page in pages.published %}
-		<li><h4><a href="/page/{{ page.url }}" class="title">{{ page.title }}</a></h4><span class="hidden"><a href="/admin/pages/edit/{{ page.id }}" class="small-link edit">edit</a><a href="/admin/pages/delete/{{ page.id }}" class="small-link delete">delete</a></span></li>
+		<li><h4><a href="/page/{{ page.url }}" class="title">{{ page.title }}</a></h4><span class="hidden"><a href="/admin/pages/edit/{{ page.id }}" class="small-link edit">edit</a><a href="/admin/pages/draft/{{ page.id }}" class="small-link draft">draft</a><a href="/admin/pages/delete/{{ page.id }}" class="small-link delete">delete</a></span></li>
 	{% endfor %}
 </ul>
 {% endif %}

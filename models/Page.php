@@ -2,12 +2,18 @@
 namespace Hawalius\Models;
 
 class Page extends \Hawalius\Model{
-	public function many($limit = 10){
+	public function many($limit = 10, $showDrafts = false){
 		global $DB;
 		
-		$result = $DB->query('SELECT * from ::pages ORDER by time DESC');
+		$query = 'SELECT * from ::pages ';
+		if(!$showDrafts){
+			$query .= 'WHERE published = 1';
+		}
+		$query .= ' ORDER by time DESC';
 		
-		return $result->fetchAll();
+		$stmt = $DB->query($query);
+		
+		return $stmt->fetchAll();
 	}
 	public function drafts(){
 		global $DB;
@@ -90,6 +96,28 @@ class Page extends \Hawalius\Model{
 		$stmt->bindParam('id', $id, \PDO::PARAM_INT);
 		$stmt->execute();
                 
+		// Return true for now
+		return true;
+	}
+	
+	public function publish($id){
+		global $DB;
+		
+		$stmt = $DB->prepare('UPDATE ::pages SET published = 1 WHERE id = :id');
+		$stmt->bindParam('id', $id, \PDO::PARAM_INT);
+		$stmt->execute();
+		
+		// Return true for now
+		return true;
+	}
+	
+	public function draft($id){
+		global $DB;
+		
+		$stmt = $DB->prepare('UPDATE ::pages SET published = 0 WHERE id = :id');
+		$stmt->bindParam('id', $id, \PDO::PARAM_INT);
+		$stmt->execute();
+		
 		// Return true for now
 		return true;
 	}

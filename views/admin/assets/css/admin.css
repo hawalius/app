@@ -52,6 +52,12 @@ a.small-link {
 a.edit {
 	color: #333;
 }
+a.publish {
+	color: #333;
+}
+a.draft {
+	color: #333;
+}
 a.delete {
 	color: #ff4242;
 }

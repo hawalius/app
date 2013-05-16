@@ -41,6 +41,23 @@ class Admin extends \Hawalius\Controller{
 				}
 				$this->view->render('admin/writepost.html');
 			break;
+			
+			case 'publish':
+				if($id){
+					if($post->publish($id)){
+						redirect('/admin/posts');
+					}
+				}
+			break;
+			
+			case 'draft':
+				if($id){
+					if($post->draft($id)){
+						redirect('/admin/posts');
+					}
+				}
+			break;
+			
 			case 'edit':
 				$p = $post->single($id);
 				if(is_array($p)){
@@ -94,6 +111,23 @@ class Admin extends \Hawalius\Controller{
 				}
 				$this->view->render('admin/writepage.html');
 			break;
+			
+			case 'publish':
+				if($id){
+					if($page->publish($id)){
+						redirect('/admin/pages');
+					}
+				}
+			break;
+			
+			case 'draft':
+				if($id){
+					if($page->draft($id)){
+						redirect('/admin/pages');
+					}
+				}
+			break;
+			
 			case 'edit':
 				$p = $page->single($id);
 				if(is_array($p)){
