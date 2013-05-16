@@ -44,7 +44,7 @@ class Page extends \Hawalius\Model{
 	public function url($url = ''){
 		global $DB;
 		
-		$stmt = $DB->prepare('SELECT * from ::pages WHERE url = :url');
+		$stmt = $DB->prepare('SELECT * from ::pages WHERE url = :url AND published = 1');
 		$stmt->bindParam('url', $url, \PDO::PARAM_STR);
 		$stmt->execute();
 		
