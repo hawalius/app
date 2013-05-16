@@ -1,12 +1,6 @@
 var Dashboard = {
 	init: function(){
-		var dots = document.getElementsByClassName('dot');
 		Dashboard.Clock.init();
-		[].forEach.call(dots, function(dot){
-			dot.addEventListener('click', function(){
-				
-			});
-		});
 	}
 };
 Dashboard.Clock = {

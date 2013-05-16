@@ -44,19 +44,6 @@ ul li a.title {
 	font-weight: bold;
 	text-decoration: none;
 }
-.dot {
-	display: inline-block;
-	width: 13px;
-	height: 13px;
-	border-radius: 50%;
-	cursor: pointer;
-}
-.dot.draft {
-	background: red;
-}
-.dot.published {
-	background: green;
-}
 a.small-link {
 	padding: 6px;
 	font-size: 14px;
