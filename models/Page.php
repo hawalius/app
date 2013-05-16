@@ -9,6 +9,21 @@ class Page extends \Hawalius\Model{
 		
 		return $result->fetchAll();
 	}
+	public function drafts(){
+		global $DB;
+		
+		$stmt = $DB->query('SELECT * from ::pages WHERE published = 0 ORDER by time DESC');
+		
+		return $stmt->fetchAll();
+	}
+	
+	public function published(){
+		global $DB;
+		
+		$stmt = $DB->query('SELECT * from ::pages WHERE published = 1 ORDER by time DESC');
+		
+		return $stmt->fetchAll();
+	}
 	
 	public function single($id = 0){
 		global $DB;

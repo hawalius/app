@@ -2,18 +2,26 @@
 namespace Hawalius\Models;
 
 class Post extends \Hawalius\Model{
-	public function many($limit = 10, $showDrafts = false){
+	public function many($limit = 10){
 		global $DB;
 		
-		$query = 'SELECT * from ::posts ';
-		if(!$showDrafts){
-			$query .= 'WHERE published = 1';
-		}
-		$query .= ' ORDER by time DESC';
+		$stmt = $DB->query('SELECT * from ::posts ORDER by time DESC');
 		
-		$stmt = $DB->prepare($query);
-		$stmt->bindParam('limit', $limit, \PDO::PARAM_INT);
-		$stmt->execute();
+		return $stmt->fetchAll();
+	}
+	
+	public function drafts(){
+		global $DB;
+		
+		$stmt = $DB->query('SELECT * from ::posts WHERE published = 0 ORDER by time DESC');
+		
+		return $stmt->fetchAll();
+	}
+	
+	public function published(){
+		global $DB;
+		
+		$stmt = $DB->query('SELECT * from ::posts WHERE published = 1 ORDER by time DESC');
 		
 		return $stmt->fetchAll();
 	}

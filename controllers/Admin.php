@@ -65,10 +65,11 @@ class Admin extends \Hawalius\Controller{
 			break;
 			
 			default:
-				$posts = $post->many(0, true);
+				$drafts = $post->drafts();
+				$published = $post->published();
 
 				$this->view->render('admin/manage.html', array(
-					'posts' => $posts,
+					'posts' => array('drafts' => $drafts, 'published' => $published),
 					'showPosts' => 1
 				));
 			break;
@@ -117,10 +118,11 @@ class Admin extends \Hawalius\Controller{
 			break;
 			
 			default:
-				$pages = $page->many(0);
+				$drafts = $page->drafts();
+				$published = $page->published();
 
 				$this->view->render('admin/manage.html', array(
-					'pages' => $pages,
+					'pages' => array('drafts' => $drafts, 'published' => $published),
 					'showPages' => 1
 				));
 			break;
