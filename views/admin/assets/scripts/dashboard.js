@@ -22,6 +22,7 @@ Admin.Dashboard.Clock = {
 	update: function(){
 		var now = new Date(),
 			hr = now.getHours(),
+			ampm = (hr >= 12 ? 'PM' : 'AM'),
 			el = document.getElementById('widget_clock');
 		if(hr > 12){
 			hr -= 12;
@@ -46,8 +47,8 @@ Admin.Dashboard.Clock = {
 			year = (yy < 1000) ? yy + 1900 : yy;
 		}
 		var day = now.getDate();
-		var month = Dashboard.Clock.getMonthName(now);
-		el.innerHTML = '<div class="time">'+hr+ ':'+mn+':'+sc+ ' '+(hr >= 12 ? 'PM' : 'AM')+'</div><div class="date">'+day+' '+month+', '+year+'</div>';
+		var month = Admin.Dashboard.Clock.getMonthName(now);
+		el.innerHTML = '<div class="time">'+hr+ ':'+mn+':'+sc+ ' '+ampm+'</div><div class="date">'+day+' '+month+', '+year+'</div>';
 	}
 };
 document.addEventListener('DOMContentLoaded', function(){
