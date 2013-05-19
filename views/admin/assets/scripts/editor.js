@@ -2,9 +2,9 @@ document.addEventListener('DOMContentLoaded', function(){
 	var el = document.getElementsByName('content');
 	if(el && el[0]){
 		var content = '';
-		if(el[0].textContent){
+		if(el[0].textContent !== undefined){
 			content = el[0].textContent;
-		}else if(el[0].innerText){
+		}else if(el[0].innerText !== undefined){
 			content = el[0].innerText;
 		}
 		var editor = new EpicEditor({
@@ -21,9 +21,9 @@ document.addEventListener('DOMContentLoaded', function(){
 			}
 		}).load();
 		editor.on('save', function(){
-			if(el[0].textContent){
+			if(el[0].textContent !== undefined){
 				el[0].textContent = editor.exportFile();
-			}else if(el[0].innerText){
+			}else if(el[0].innerText !== undefined){
 				el[0].innerText = editor.exportFile();
 			}
 		});
