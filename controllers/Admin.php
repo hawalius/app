@@ -35,7 +35,8 @@ class Admin extends \Hawalius\Controller{
 			case 'write':
 				if(isset($_POST['title']) && isset($_POST['content'])){
 					$url = slug($_POST['title']);
-					if($post->write($_POST['title'], $_POST['content'], $url)){
+					$author = Auth::get()['id'];
+					if($post->write($_POST['title'], $_POST['content'], $url, $author)){
 						redirect('/admin/posts');
 					}
 				}
@@ -62,7 +63,7 @@ class Admin extends \Hawalius\Controller{
 				$p = $post->single($id);
 				if(is_array($p)){
 					if(isset($_POST['title']) && isset($_POST['content'])){
-						if($post->edit($id, $_POST['title'], $_POST['content'], $p['url'])){
+						if($post->edit($id, $_POST['title'], $_POST['content'], $p['url'], $p['author'])){
 							redirect('/admin/posts');
 						}
 					}
@@ -105,7 +106,8 @@ class Admin extends \Hawalius\Controller{
 			case 'write':
 				if(isset($_POST['title']) && isset($_POST['content'])){
 					$url = slug($_POST['title']);
-					if($page->write($_POST['title'], $_POST['content'], $url)){
+					$author = Auth::get()['id'];
+					if($page->write($_POST['title'], $_POST['content'], $url, $author)){
 						redirect('/admin/pages');
 					}
 				}
@@ -132,7 +134,7 @@ class Admin extends \Hawalius\Controller{
 				$p = $page->single($id);
 				if(is_array($p)){
 					if(isset($_POST['title']) && isset($_POST['content'])){
-						if($page->edit($id, $_POST['title'], $_POST['content'], $p['url'])){
+						if($page->edit($id, $_POST['title'], $_POST['content'], $p['url'], $p['author'])){
 							redirect('/admin/pages');
 						}
 					}
