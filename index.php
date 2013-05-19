@@ -55,11 +55,11 @@ try{
 	}
 	
 	$DB = new DB();
-	$Plugins = new Plugins;
-	
-	$Plugins->init();
 	
 	$twig = loadTwig();
+	
+	$Plugins = new Plugins($twig);
+	$Plugins->init();
 	
 	$app = new App($twig, $routes);
 	spl_autoload_register(array($app, 'autoload'));

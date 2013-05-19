@@ -4,6 +4,10 @@ namespace Hawalius;
 class Plugins{
 	public $plugins = array();
 	
+	public function __construct($view = NULL){
+		$this->view = $view;
+	}
+	
 	public function init(){
 		global $config;
 		
@@ -17,6 +21,9 @@ class Plugins{
 			
 			$class = new \ReflectionClass('\\Hawalius\\Plugins\\' . $plugin);
 			$plugin = $class->newInstanceArgs(array($conf));
+			if(method_exists($plugin, 'init')){
+				$plugin->init($this->view);
+			}
 			
 			array_push($this->plugins, $plugin);
 		}
