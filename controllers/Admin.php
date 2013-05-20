@@ -165,6 +165,10 @@ class Admin extends \Hawalius\Controller{
 		}
 	}
 	
+	public function settings(){
+		$this->view->render('admin/settings.html');
+	}
+	
 	public function login(){
 		if(!\Hawalius\Auth::guest()){
 			redirect('/admin');
