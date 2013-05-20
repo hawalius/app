@@ -7,6 +7,7 @@ class Admin extends \Hawalius\Controller{
 		parent::__construct($app, $view);
 		
 		$this->view->addFunction('getUser', new \Twig_Function_Function('\\Hawalius\\Auth::get'));
+		$this->view->addFunction('getGitRev', new \Twig_Function_Function('getGitRev'));
 	}
 
 	public function index(){
