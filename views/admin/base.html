@@ -41,9 +41,11 @@
 			{% endblock %}
 		</div>
 	</main>
+	{% if getUser() %}
 	<footer id="bottom">
 		<p>Powered by <a href="http://github.com/hawalius/hawalius">Hawalius</a> ({{ getGitRev() }})</p>
 	</footer>
+	{% endif %}
 </div>
 </body>
 </htm>
