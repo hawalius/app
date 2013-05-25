@@ -60,14 +60,15 @@ class Page extends \Hawalius\Model{
 		return $stmt->rowCount();
 	}
 	
-	public function write($title, $content, $url, $author = 0){
+	public function write($title, $content, $url, $author = 0, $publish = 0){
 		global $DB;
 		
-		$stmt = $DB->prepare('INSERT ::pages SET title = :title, content = :content, url = :url, author_id = :author');
+		$stmt = $DB->prepare('INSERT ::pages SET title = :title, content = :content, url = :url, author_id = :author, publish = :publish');
 		$stmt->bindParam('title', $title, \PDO::PARAM_STR);
 		$stmt->bindParam('content', $content, \PDO::PARAM_STR);
 		$stmt->bindParam('url', $url, \PDO::PARAM_STR);
 		$stmt->bindParam('author', $author, \PDO::PARAM_INT);
+		$stmt->bindParam('publish', $publish, \PDO::PARAM_INT);
 		$stmt->execute();
 		
 		// Return true for now
