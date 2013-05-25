@@ -67,5 +67,7 @@ try{
 }catch(\Exception $e){
 	http_response_code(503);
 	
-	die('Hawalius Exception: ' . $e->getMessage());
+	if(ENV == 'development'){
+		die('Hawalius Exception: ' . $e->getMessage());
+	}
 }
