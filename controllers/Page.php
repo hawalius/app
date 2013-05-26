@@ -7,8 +7,8 @@ class Page extends \Hawalius\Controller{
 		
 		$p = $page->url($url);
 		
-		$this->view->render('post.html', array(
+		$this->view->render('post.html', [
 			'post' => $p
-		));
+		]);
 	}
 }

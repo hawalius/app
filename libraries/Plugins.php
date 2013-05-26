@@ -20,7 +20,7 @@ class Plugins{
 			}
 			
 			$class = new \ReflectionClass('\\Hawalius\\Plugins\\' . $plugin);
-			$plugin = $class->newInstanceArgs(array($this->view, $conf));
+			$plugin = $class->newInstanceArgs([$this->view, $conf]);
 			if(method_exists($plugin, 'init')){
 				$plugin->init();
 			}

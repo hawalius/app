@@ -15,10 +15,10 @@ class DB extends PDO{
 		$this->prefix = $config['db']['prefix'];
 		
 		try{
-			parent::__construct($dsn, $config['db']['username'], $config['db']['password'], array(
+			parent::__construct($dsn, $config['db']['username'], $config['db']['password'], [
 				PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
 				PDO::ATTR_PERSISTENT => true
-			));
+			]);
 			$this->connected = true;
 		}catch(PDOException $e){
 			die('Database is down.');

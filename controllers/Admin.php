@@ -18,10 +18,10 @@ class Admin extends \Hawalius\Controller{
 		}else{
 			$totalposts = $post->num();
 			$totalpages = $page->num();
-			$this->view->render('admin/loggedin.html', array(
-				'posts' => array('total' => $totalposts, 'published' => $totalposts),
-				'pages' => array('total' => $totalpages, 'published' => $totalpages)
-			));
+			$this->view->render('admin/loggedin.html', [
+				'posts' => ['total' => $totalposts, 'published' => $totalposts],
+				'pages' => ['total' => $totalpages, 'published' => $totalpages]
+			]);
 		}
 	}
 	
@@ -69,9 +69,9 @@ class Admin extends \Hawalius\Controller{
 						}
 					}
 					
-					$this->view->render('admin/editpost.html', array(
+					$this->view->render('admin/editpost.html', [
 						'post' => $p
-					));
+					]);
 				}else{
 					redirect('/admin/posts/write');
 				}
@@ -87,10 +87,10 @@ class Admin extends \Hawalius\Controller{
 				$drafts = $post->drafts();
 				$published = $post->published();
 
-				$this->view->render('admin/manage.html', array(
-					'posts' => array('drafts' => $drafts, 'published' => $published),
+				$this->view->render('admin/manage.html', [
+					'posts' => ['drafts' => $drafts, 'published' => $published],
 					'showPosts' => 1
-				));
+				]);
 			break;
 		}
 		
@@ -140,9 +140,9 @@ class Admin extends \Hawalius\Controller{
 						}
 					}
 					
-					$this->view->render('admin/editpage.html', array(
+					$this->view->render('admin/editpage.html', [
 						'post' => $p
-					));
+					]);
 				}else{
 					redirect('/admin/pages/write');
 				}
@@ -158,10 +158,10 @@ class Admin extends \Hawalius\Controller{
 				$drafts = $page->drafts();
 				$published = $page->published();
 
-				$this->view->render('admin/manage.html', array(
+				$this->view->render('admin/manage.html', [
 					'pages' => array('drafts' => $drafts, 'published' => $published),
 					'showPages' => 1
-				));
+				]);
 			break;
 		}
 	}
