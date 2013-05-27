@@ -13,6 +13,7 @@ class Admin extends \Hawalius\Controller{
 	public function index(){
 		$post = $this->app->getModel('post');
 		$page = $this->app->getModel('page');
+		
 		if(\Hawalius\Auth::guest()){
 			redirect('/admin/login');
 		}else{
