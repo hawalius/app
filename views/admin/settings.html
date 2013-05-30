@@ -1,0 +1,15 @@
+{% extends "admin/base.html" %}
+{% set prefix = 'Settings' %}
+
+{% set css = ['manage.css'] %}
+{% block content %}
+<div id="settings">
+	<h1>Settings</h1>
+	<h2>Themes</h2>
+	<ul class="themes">
+{% for theme in themes %}
+		<li<div><img src="/themes/{{ name }}/screenshot.png"></div><a href="/settings/themes/set/{{ name }}" class="btn">Set</a></li>
+{% endfor %}
+	</ul>
+</div>
+{% endblock %}

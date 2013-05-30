@@ -168,7 +168,9 @@ class Admin extends \Hawalius\Controller{
 	}
 	
 	public function settings(){
-		$this->view->render('admin/settings.html');
+		$this->view->render('admin/settings.html', [
+			'themes' => ['default']
+		]);
 	}
 	
 	public function login(){
