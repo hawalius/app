@@ -54,7 +54,25 @@ class Page extends \Hawalius\Model{
 	public function num(){
 		global $DB;
 	
-		$stmt = $DB->prepare('SELECT id from ::pages ');
+		$stmt = $DB->prepare('SELECT id from ::pages');
+		$stmt->execute();
+		
+		return $stmt->rowCount();
+	}
+	
+	public function numPublished(){
+		global $DB;
+	
+		$stmt = $DB->prepare('SELECT id from ::pages WHERE published = 1');
+		$stmt->execute();
+		
+		return $stmt->rowCount();
+	}
+	
+	public function numDrafts(){
+		global $DB;
+	
+		$stmt = $DB->prepare('SELECT id from ::pages WHERE published = 0');
 		$stmt->execute();
 		
 		return $stmt->rowCount();

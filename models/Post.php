@@ -61,6 +61,24 @@ class Post extends \Hawalius\Model{
 		return $stmt->rowCount();
 	}
 	
+	public function numPublished(){
+		global $DB;
+	
+		$stmt = $DB->prepare('SELECT id from ::posts WHERE published = 1');
+		$stmt->execute();
+		
+		return $stmt->rowCount();
+	}
+	
+	public function numDrafts(){
+		global $DB;
+	
+		$stmt = $DB->prepare('SELECT id from ::posts WHERE published = 0');
+		$stmt->execute();
+		
+		return $stmt->rowCount();
+	}
+	
 	public function write($title, $content, $url, $author = 0, $publish = 0){
 		global $DB;
 		

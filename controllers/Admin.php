@@ -20,8 +20,8 @@ class Admin extends \Hawalius\Controller{
 			$totalposts = $post->num();
 			$totalpages = $page->num();
 			$this->view->render('admin/loggedin.html', [
-				'posts' => ['total' => $totalposts, 'published' => $totalposts],
-				'pages' => ['total' => $totalpages, 'published' => $totalpages]
+				'posts' => ['total' => $totalposts, 'published' => $post->numPublished()],
+				'pages' => ['total' => $totalpages, 'published' => $page->numPublished()]
 			]);
 		}
 	}
