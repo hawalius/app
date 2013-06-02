@@ -10,4 +10,5 @@ body {
 	width: 100%;
 	padding: 0.2em 0.6em;
 	margin: 0;
+	-webkit-font-smoothing: antialiased;
 }
