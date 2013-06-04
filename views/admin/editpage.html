@@ -2,7 +2,8 @@
 {% set prefix = 'Edit page' %}
 {% set scripts = ['editor.js'] %}
 {% block content %}
-<form method="post" enctype="multipart/form-data" id="post_form">
+<form method="post" enctype="multipart/form-data" id="post_form">>
+	<input type="hidden" name="token" value="{{ getToken() }}">
 	<header>
 		<h1>Edit page</h1>
 		<input type="text" name="title" placeholder="Page title" value="{{ post.title }}" autocomplete="off">

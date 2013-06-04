@@ -3,6 +3,7 @@
 {% set scripts = ['editor.js'] %}
 {% block content %}
 <form method="post" enctype="multipart/form-data" id="post_form">
+	<input type="hidden" name="token" value="{{ getToken() }}">
 	<header>
 		<h1>Edit post</h1>
 		<input type="text" name="title" placeholder="Post title" value="{{ post.title }}" autocomplete="off">

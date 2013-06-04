@@ -103,3 +103,4 @@ class App{
 		return new $modelName($this);
 	}
 }
+class Exception extends \Exception{}

@@ -6,6 +6,7 @@ class Admin extends \Hawalius\Controller{
 	public function __construct($app = NULL, $view = NULL){
 		parent::__construct($app, $view);
 		
+		$this->view->addFunction('getToken', new \Twig_Function_Function('\\Hawalius\\CSRF::getToken'));
 		$this->view->addFunction('getUser', new \Twig_Function_Function('\\Hawalius\\Auth::get'));
 		$this->view->addFunction('getGitRev', new \Twig_Function_Function('getGitRev'));
 	}
@@ -36,8 +37,9 @@ class Admin extends \Hawalius\Controller{
 		switch($type){
 			case 'write':
 				if(isset($_POST['title']) && isset($_POST['content'])){
+					\Hawalius\CSRF::check();
 					$url = slug($_POST['title']);
-					$author = Auth::get()['id'];
+					$author = \Hawalius\Auth::get()['id'];
 					if($post->write($_POST['title'], $_POST['content'], $url, $author)){
 						redirect('/admin/posts');
 					}
@@ -65,6 +67,7 @@ class Admin extends \Hawalius\Controller{
 				$p = $post->single($id);
 				if(is_array($p)){
 					if(isset($_POST['title']) && isset($_POST['content'])){
+						\Hawalius\CSRF::check();
 						if($post->edit($id, $_POST['title'], $_POST['content'], $p['url'], $p['author'])){
 							redirect('/admin/posts');
 						}
@@ -107,6 +110,7 @@ class Admin extends \Hawalius\Controller{
 		switch($type){
 			case 'write':
 				if(isset($_POST['title']) && isset($_POST['content'])){
+					\Hawalius\CSRF::check();
 					$url = slug($_POST['title']);
 					$author = Auth::get()['id'];
 					if($page->write($_POST['title'], $_POST['content'], $url, $author)){
@@ -136,6 +140,7 @@ class Admin extends \Hawalius\Controller{
 				$p = $page->single($id);
 				if(is_array($p)){
 					if(isset($_POST['title']) && isset($_POST['content'])){
+						\Hawalius\CSRF::check();
 						if($page->edit($id, $_POST['title'], $_POST['content'], $p['url'], $p['author'])){
 							redirect('/admin/pages');
 						}
@@ -181,6 +186,7 @@ class Admin extends \Hawalius\Controller{
 		if(!isset($_POST['username']) || !isset($_POST['password'])){
 			$this->view->render('admin/login.html');
 		}else{
+			\Hawalius\CSRF::check();
 			$username = $_POST['username'];
 			$password = $_POST['password'];
 			if(\Hawalius\Auth::login($username, $password)){

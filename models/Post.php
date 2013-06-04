@@ -64,12 +64,12 @@ class Post extends \Hawalius\Model{
 	}
 	
 	public function write($title, $content, $url, $author = 0, $publish = 0){	
-		$stmt = $this->db->prepare('INSERT ::posts SET title = :title, content = :content, url = :url, author_id = :author, publish = :publish');
+		$stmt = $this->db->prepare('INSERT ::posts SET title = :title, content = :content, url = :url, author_id = :author, published = :published');
 		$stmt->bindParam('title', $title, \PDO::PARAM_STR);
 		$stmt->bindParam('content', $content, \PDO::PARAM_STR);
 		$stmt->bindParam('url', $url, \PDO::PARAM_STR);
 		$stmt->bindParam('author', $author, \PDO::PARAM_INT);
-		$stmt->bindParam('publish', $publish, \PDO::PARAM_INT);
+		$stmt->bindParam('published', $publish, \PDO::PARAM_INT);
 		$stmt->execute();
 		
 		// Return true for now

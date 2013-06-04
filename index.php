@@ -42,6 +42,7 @@ try{
 	require HAWALIUS_PATH . '/app/core/Controller.php';
 	require HAWALIUS_PATH . '/app/core/Model.php';
 	require HAWALIUS_PATH . '/app/core/View.php';
+	require HAWALIUS_PATH . '/app/core/CSRF.php';
 	require HAWALIUS_PATH . '/app/core/Utils.php';
 	
 	require HAWALIUS_PATH . '/app/libraries/Plugins.php';
@@ -64,7 +65,7 @@ try{
 	$app = new App($twig, $DB, $routes);
 	spl_autoload_register(array($app, 'autoload'));
 	$app->run();
-}catch(\Exception $e){
+}catch(Exception $e){
 	http_response_code(503);
 	
 	if(ENV == 'development'){
