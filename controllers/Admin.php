@@ -160,7 +160,7 @@ class Admin extends \Hawalius\Controller{
 				$published = $page->published();
 
 				$this->view->render('admin/manage.html', [
-					'pages' => array('drafts' => $drafts, 'published' => $published),
+					'pages' => ['drafts' => $drafts, 'published' => $published],
 					'showPages' => 1
 				]);
 			break;
