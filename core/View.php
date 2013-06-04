@@ -23,6 +23,7 @@ function loadTwig(){
 	}
 	$loader = new \Twig_Loader_Filesystem(array(
 		HAWALIUS_PATH . '/themes/' . $theme,
+		HAWALIUS_PATH . '/themes/default',
 		HAWALIUS_PATH . '/app/views'
 	));
 	$twig = new Twig_Hawalius_Environment($loader, array(
