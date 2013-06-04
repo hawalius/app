@@ -4,8 +4,9 @@ namespace Hawalius;
 class App{
 	public $_controller, $_method;
 	
-	public function __construct($view, $routes){
+	public function __construct($view, $db, $routes){
 		$this->view = $view;
+		$this->db = $db;
 		$this->routes = $routes;
 	}
 
@@ -76,7 +77,7 @@ class App{
 			$className = 'Hawalius\\Controllers\\FourOhFour';
 		}
 
-		$controller = new $className($this, $this->view);
+		$controller = new $className($this);
 		$method = $this->_method;
 
 		if(method_exists($className, $method) && is_callable(array($className, $method))){

@@ -61,7 +61,7 @@ try{
 	$Plugins = new Plugins($twig);
 	$Plugins->init();
 	
-	$app = new App($twig, $routes);
+	$app = new App($twig, $DB, $routes);
 	spl_autoload_register(array($app, 'autoload'));
 	$app->run();
 }catch(\Exception $e){
