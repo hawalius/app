@@ -82,8 +82,11 @@ class Admin extends \Hawalius\Controller{
 			break;
 			
 			case 'delete':
-				if($id){
+				if(isset($_POST['id'])){
+					\Hawalius\CSRF::check();
+					$id = $_POST['id'];
 					$p = $post->delete($id);
+					redirect('/admin/posts');
 				}
 			break;
 			
@@ -155,8 +158,11 @@ class Admin extends \Hawalius\Controller{
 			break;
 			
 			case 'delete':
-				if($id){
+				if(isset($_POST['id'])){
+					\Hawalius\CSRF::check();
+					$id = $_POST['id'];
 					$p = $page->delete($id);
+					redirect('/admin/pages');
 				}
 			break;
 			
