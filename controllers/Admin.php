@@ -183,7 +183,12 @@ class Admin extends \Hawalius\Controller{
 		foreach(scandir(HAWALIUS_PATH . '/themes') as $file){
 			if($file !== '.' && $file !== '..' && $file[0] !== '.'){
 				if(!is_file($file)){
-					array_push($themes, array('name' => $file, 'screenshot' => $file . '/screenshot.png'));
+					$tmp = array();
+					$tmp['name'] = $file;
+					if(is_file($file . '/screenshot.png')){
+						$tmp['screenshot'] = $file . '/screenshot.png';
+					}
+					array_push($themes, $tmp);
 				}
 			}
 		}
