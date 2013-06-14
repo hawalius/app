@@ -179,8 +179,17 @@ class Admin extends \Hawalius\Controller{
 	}
 	
 	public function settings(){
+		$themes = array();
+		foreach(scandir(HAWALIUS_PATH . '/themes') as $file){
+			if($file !== '.' && $file !== '..' && $file[0] !== '.'){
+				if(!is_file($file)){
+					array_push($themes, array('name' => $file, 'screenshot' => $file . '/screenshot.png'));
+				}
+			}
+		}
+		var_dump($themes);
 		$this->view->render('admin/settings.html', [
-			'themes' => ['default']
+			'themes' => $themes
 		]);
 	}
 	

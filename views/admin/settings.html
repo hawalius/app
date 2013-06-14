@@ -8,7 +8,7 @@
 	<h2>Themes</h2>
 	<ul class="themes">
 {% for theme in themes %}
-		<li<div><img src="/themes/{{ name }}/screenshot.png"></div><a href="/settings/themes/set/{{ name }}" class="btn">Set</a></li>
+		<li<div><img src="/themes/{{ theme.name }}/screenshot.png"></div><a href="/settings/themes/set/{{ theme.name }}" class="btn">Set</a></li>
 {% endfor %}
 	</ul>
 </div>
