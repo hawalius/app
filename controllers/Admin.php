@@ -192,7 +192,6 @@ class Admin extends \Hawalius\Controller{
 				}
 			}
 		}
-		var_dump($themes);
 		$this->view->render('admin/settings.html', [
 			'themes' => $themes
 		]);
