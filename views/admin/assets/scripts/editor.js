@@ -18,7 +18,6 @@ document.addEventListener('DOMContentLoaded', function(){
 				file = e.currentTarget.file;
 			}
 		}
-		console.log( file.name.slice(file.name.length - 3));
 		if(images.indexOf(file.type) !== -1){ // is image			
 		}else if(file.type == 'text/x-markdown' || file.name.slice(file.name.length - 3) == '.md'){ // hack since file.type chrome doesn't recognize .md files
 			if(content){
