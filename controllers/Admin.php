@@ -178,23 +178,39 @@ class Admin extends \Hawalius\Controller{
 		}
 	}
 	
-	public function settings(){
-		$themes = array();
-		foreach(scandir(HAWALIUS_PATH . '/themes') as $file){
-			if($file !== '.' && $file !== '..' && $file[0] !== '.'){
-				if(!is_file($file)){
-					$tmp = array();
-					$tmp['name'] = $file;
-					if(is_file($file . '/screenshot.png')){
-						$tmp['screenshot'] = $file . '/screenshot.png';
+	public function settings($type = '', $action = '', $value = ''){
+		switch($type){
+			case 'themes':
+				if($action == 'set'){
+					if(!is_dir(HAWALIUS_PATH . '/themes/' . $value)){
+						die('Theme does not exist.');
 					}
-					array_push($themes, $tmp);
+					if(!empty($value)){
+						\Hawalius\Config::set('theme', $value);
+						redirect('/admin/settings');
+					}
 				}
-			}
+			break;
+			
+			default:
+				$themes = array();
+				foreach(scandir(HAWALIUS_PATH . '/themes') as $file){
+					if($file !== '.' && $file !== '..' && $file[0] !== '.'){
+						if(!is_file($file)){
+							$tmp = array();
+							$tmp['name'] = $file;
+							if(is_file($file . '/screenshot.png')){
+								$tmp['screenshot'] = $file . '/screenshot.png';
+							}
+							array_push($themes, $tmp);
+						}
+					}
+				}
+				$this->view->render('admin/settings.html', [
+					'themes' => $themes
+				]);
+			break;
 		}
-		$this->view->render('admin/settings.html', [
-			'themes' => $themes
-		]);
 	}
 	
 	public function login(){
