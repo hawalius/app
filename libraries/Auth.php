@@ -1,7 +1,7 @@
 <?php
 namespace Hawalius;
 
-require_once HAWALIUS_PATH . '/app/vendor/PasswordLib/PasswordLib.php';
+require_once HAWALIUS_PATH . '/app/vendor/PasswordLib/lib/PasswordLib/PasswordLib.php';
 class Auth{
 	public static function guest(){
 		return isset($_SESSION['user']) == false;

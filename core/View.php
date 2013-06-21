@@ -1,8 +1,8 @@
 <?php
 namespace Hawalius;
 
-require HAWALIUS_PATH . '/app/vendor/Twig/Autoloader.php';
-require HAWALIUS_PATH . '/app/vendor/Michelf/Markdown.php';
+require HAWALIUS_PATH . '/app/vendor/Twig/lib/Twig/Autoloader.php';
+require HAWALIUS_PATH . '/app/vendor/Markdown/Michelf/Markdown.php';
 \Twig_Autoloader::register();
 
 class Twig_Hawalius_Environment extends \Twig_Environment{
