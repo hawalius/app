@@ -12,7 +12,7 @@ function getBlogInfo(){
 function getAssetUrl(){
 	global $config;
 	if(isset($config['theme'])){
-		$theme = $config['theme'];
+		$theme = \Hawalius\Config::$config['theme'];
 	}else{
 		$theme = 'default';
 	}
