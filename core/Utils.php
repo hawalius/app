@@ -11,7 +11,7 @@ function getBlogInfo(){
 }
 function getAssetUrl(){
 	global $config;
-	if(isset($config['theme'])){
+	if(array_key_exists('theme', \Hawalius\Config::$config)){
 		$theme = \Hawalius\Config::$config['theme'];
 	}else{
 		$theme = 'default';

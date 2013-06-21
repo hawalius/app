@@ -45,6 +45,7 @@ try{
 	require HAWALIUS_PATH . '/app/core/CSRF.php';
 	require HAWALIUS_PATH . '/app/core/Utils.php';
 	
+	require HAWALIUS_PATH . '/app/libraries/Themes.php';
 	require HAWALIUS_PATH . '/app/libraries/Plugins.php';
 	require HAWALIUS_PATH . '/app/libraries/Plugin.php';
 	

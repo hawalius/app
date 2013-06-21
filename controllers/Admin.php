@@ -193,21 +193,8 @@ class Admin extends \Hawalius\Controller{
 			break;
 			
 			default:
-				$themes = array();
-				foreach(scandir(HAWALIUS_PATH . '/themes') as $file){
-					if($file !== '.' && $file !== '..' && $file[0] !== '.'){
-						if(!is_file($file)){
-							$tmp = array();
-							$tmp['name'] = $file;
-							if(is_file($file . '/screenshot.png')){
-								$tmp['screenshot'] = $file . '/screenshot.png';
-							}
-							array_push($themes, $tmp);
-						}
-					}
-				}
 				$this->view->render('admin/settings.html', [
-					'themes' => $themes
+					'themes' => \Hawalius\Themes::many()
 				]);
 			break;
 		}
