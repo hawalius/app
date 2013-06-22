@@ -220,6 +220,7 @@ class Admin extends \Hawalius\Controller{
 	}
 	
 	public function logout(){
+		\Hawalius\CSRF::check();
 		\Hawalius\Auth::logout();
 	}
 }
