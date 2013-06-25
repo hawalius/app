@@ -35,6 +35,9 @@ function hook($name, $value = ''){
 	
 	return $Plugins->hook($name, $value);
 }
+function getVersion(){
+	return VERSION;
+}
 function getGitRev(){
 	return exec('git rev-parse --short HEAD');
 }

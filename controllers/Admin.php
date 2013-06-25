@@ -8,6 +8,7 @@ class Admin extends \Hawalius\Controller{
 		
 		$this->view->addFunction('getToken', new \Twig_Function_Function('\\Hawalius\\CSRF::getToken'));
 		$this->view->addFunction('getUser', new \Twig_Function_Function('\\Hawalius\\Auth::get'));
+		$this->view->addFunction('getVersion', new \Twig_Function_Function('getVersion'));
 		$this->view->addFunction('getGitRev', new \Twig_Function_Function('getGitRev'));
 	}
 

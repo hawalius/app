@@ -43,7 +43,7 @@
 	</main>
 	{% if getUser() %}
 	<footer id="bottom">
-		<p>Powered by <a href="http://github.com/hawalius/hawalius">Hawalius</a> ({{ getGitRev() }})</p>
+		<p>Powered by <a href="http://github.com/hawalius/hawalius">Hawalius</a> {{ getVersion() }} ({{ getGitRev() }})</p>
 	</footer>
 	{% endif %}
 </div>
