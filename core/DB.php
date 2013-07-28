@@ -10,7 +10,7 @@ class DB extends PDO{
 
 	public function __construct(){
 		global $config;
-		$dsn = sprintf('%s:dbname=%s;host=%s;charset=UTF-8', $config['db']['type'], $config['db']['database'], $config['db']['host']);
+		$dsn = sprintf('%s:dbname=%s;host=%s;charset=utf8', $config['db']['type'], $config['db']['database'], $config['db']['host']);
 		
 		$this->prefix = $config['db']['prefix'];
 		
