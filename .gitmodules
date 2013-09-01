@@ -1,12 +1,12 @@
 [submodule "vendor/Twig"]
 	path = vendor/Twig
-	url = https://github.com/fabpot/Twig.git
+	url = git@github.com:fabpot/Twig.git
 [submodule "vendor/Michelf"]
 	path = vendor/Michelf
 	url = https://github.com/michelf/php-markdown.git
 [submodule "vendor/Markdown"]
 	path = vendor/Markdown
-	url = https://github.com/michelf/php-markdown.git
+	url = git@github.com:michelf/php-markdown.git
 [submodule "vendor/PasswordLib"]
 	path = vendor/PasswordLib
-	url = https://github.com/ircmaxell/PHP-PasswordLib.git
+	url = git@github.com:ircmaxell/PHP-PasswordLib.git
