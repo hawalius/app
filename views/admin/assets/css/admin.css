@@ -81,6 +81,7 @@ input[type="button"], input[type="submit"] {
 	border-radius: 5px;
 	text-transform: uppercase;
 	font-weight: 900;
+	outline: none;
 	-webkit-font-smoothing: antialiased;
 }
 input[type="button"]:hover, input[type="submit"]:hover {
