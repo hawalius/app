@@ -5,8 +5,7 @@ class Config{
 	static public $config = array();
 	
 	static public function init(){
-		global $DB;
-		$stmt = $DB->query('SELECT * from ::config');
+		$stmt = DB::query('SELECT * from ::config');
 		$stmt->execute();
 		
 		while($row = $stmt->fetch(\PDO::FETCH_ASSOC)){
@@ -15,11 +14,9 @@ class Config{
 	}
 	
 	static public function set($name, $value = ''){	
-		global $DB;
-
 		self::$config[$name] = $value;	
 		
-		$stmt = $DB->prepare('UPDATE ::config SET value = :value WHERE name = :name');
+		$stmt = DB::prepare('UPDATE ::config SET value = :value WHERE name = :name');
 		
 		$stmt->bindParam('name', $name, \PDO::PARAM_STR);
 		if(is_int($value)){

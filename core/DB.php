@@ -2,35 +2,43 @@
 namespace Hawalius;
 use PDO;
 
-class DB extends PDO{
+class DB{
 
-	public $connected = false;
-	private $debug = true;
-	private $prefix;
-
-	public function __construct(){
+	public static $connected = false;
+	private static $debug = true;
+	private static $prefix;
+	private static $instance;
+	
+	private function __construct(){} 
+	
+	private function __clonse(){} 
+	
+	public static function getInstance(){
 		global $config;
 		$dsn = sprintf('%s:dbname=%s;host=%s;charset=utf8', $config['db']['type'], $config['db']['database'], $config['db']['host']);
 		
-		$this->prefix = $config['db']['prefix'];
+		self::$prefix = $config['db']['prefix'];
 		
 		try{
-			parent::__construct($dsn, $config['db']['username'], $config['db']['password'], [
+			self::$connected = true;
+			self::$instance = new PDO($dsn, $config['db']['username'], $config['db']['password'], [
 				PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
 				PDO::ATTR_PERSISTENT => true
 			]);
-			$this->connected = true;
 		}catch(PDOException $e){
 			die('Database is down.');
 		}
+		return self::$instance; 
 	}
-		
-	public function prepare($query, $options = array()){
+	
+	public static function prepare($query, $options = array()){
 		global $config;
+		$instance = self::getInstance();
+		
 		try{
-			$sth = parent::prepare(str_replace('::', $this->prefix, $query), $options);
+			$sth = call_user_func_array(array($instance, 'prepare'), array(str_replace('::', self::$prefix, $query), $options));
 		}catch(PDOException $e){
-			if($this->debug){
+			if(self::$debug){
 				throw new PDOException($e);
 			}
 			die('An SQL-error occurred.');
@@ -38,16 +46,24 @@ class DB extends PDO{
 		return $sth;
 	}
 	
-	public function query($query){
+	public static function query($query){
 		global $config;
+		$instance = self::getInstance();
+
 		try{
-			$sth = parent::query(str_replace('::', $this->prefix, $query));
+			$sth = call_user_func_array(array($instance, 'query'), array(str_replace('::', self::$prefix, $query))); 
 		}catch(PDOException $e){
-			if($this->debug){
+			if(self::$debug){
 				throw new PDOException($e);
 			}
 			die('An SQL-error occurred.');
 		}
 		return $sth;
+	}
+	
+	final public static function __callStatic($method, $arguments) { 
+		$instance = self::getInstance(); 
+		
+		return call_user_func_array(array($instance, $method), $arguments); 
 	}
 }

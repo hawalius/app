@@ -26,6 +26,7 @@ date_default_timezone_set('Europe/Paris');
 
 $routes = [
 	'/' => 'index',
+	'/install' => 'install',
 	'/post/:action' => 'post#view',
 	'/page/:action' => 'page#view',
 	'/admin' => 'admin',
@@ -58,8 +59,6 @@ try{
 		redirect('/install.php');
 	}
 	
-	$DB = new DB();
-	
 	Config::init();
 	
 	$twig = loadTwig();
@@ -67,7 +66,7 @@ try{
 	$Plugins = new Plugins($twig);
 	$Plugins->init();
 	
-	$app = new App($twig, $DB, $routes);
+	$app = new App($twig, $routes);
 	spl_autoload_register(array($app, 'autoload'));
 	$app->run();
 }catch(Exception $e){

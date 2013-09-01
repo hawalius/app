@@ -4,9 +4,8 @@ namespace Hawalius;
 class App{
 	public $_controller, $_method;
 	
-	public function __construct($view, $db, $routes){
+	public function __construct($view, $routes){
 		$this->view = $view;
-		$this->db = $db;
 		$this->routes = $routes;
 	}
 

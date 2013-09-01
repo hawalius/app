@@ -12,10 +12,9 @@ class Auth{
 	}
 	
 	public static function login($username, $password){
-		global $DB;
 		$crypt = new \PasswordLib\PasswordLib;
 		
-		$stmt = $DB->prepare("SELECT * FROM ::users WHERE username = :username");
+		$stmt = DB::prepare("SELECT * FROM ::users WHERE username = :username");
 		$stmt->bindParam(':username', $username, \PDO::PARAM_STR);
 		$stmt->execute();
 		$user = $stmt->fetch();
