@@ -24,18 +24,7 @@ ob_start();
 
 date_default_timezone_set('Europe/Paris');
 
-$routes = [
-	'/' => 'index',
-	'/install' => 'install',
-	'/post/:action' => 'post#view',
-	'/page/:action' => 'page#view',
-	'/admin' => 'admin',
-	'/admin/login' => 'admin#login',
-	'/admin/posts' => 'admin#posts',
-	'/admin/pages' => 'admin#pages',
-	'/admin/settings' => 'admin#settings',
-	'/admin/logout' => 'admin#logout'
-];
+require HAWALIUS_PATH . '/app/routes.php';
 
 try{
 	require HAWALIUS_PATH . '/app/core/DB.php';

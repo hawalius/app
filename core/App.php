@@ -2,82 +2,79 @@
 namespace Hawalius;
 
 class App{
-	public $_controller, $_method;
+	public static $patterns = array(
+		':string' => '([a-zA-Z]+)',
+		':number' => '([0-9]+)',
+		':alpha'  => '([a-zA-Z0-9-_]+)'
+	);
 	
-	public function __construct($view, $routes){
+	/**
+		* @param Twig_Hawalius_Environment $view
+		* @param array $routes
+	**/
+	public function __construct(Twig_Hawalius_Environment $view, array $routes){
 		$this->view = $view;
 		$this->routes = $routes;
 	}
 
 	public function run(){
 		$uri = $_SERVER['REQUEST_URI'];
-		$request = explode('/', trim($uri, '/'));
+		$uri = strtok($uri, '?');
 		
-		if(count($request) > 2){
-			$route = array_slice($request, 0, 2);
-		}else{
-			$route = $request;
-		}
-		$params = array_slice($request, 2);
+		$params = array();
 		
-		foreach($this->routes as $key => $val){		
-			if(strpos($key, ':action') !== false){
-				$k = explode('/', $key);
-				$i = 0;
-				
-				foreach($k as $v){
-					if($v == ':action'){
-						$_route = array_slice($request, 0, $i);
-						$_route[$i - 1] = ':action';
-						$_params = array_slice($request, $i - 1);
-						break;
-					}
-					$i++;
-				}
+		if(array_key_exists($uri, $this->routes)){
+			$route = $this->routes[$uri];
+			
+			if(array_key_exists('method', $route)){
+				$method = $route['method'];
+			}else{
+				$method = 'index';
 			}
 			
-			$r = '/' . implode('/', $route);
-			if(isset($_route)){
-				$_r = '/' . implode('/', $_route);
-				if(preg_match('#^' . $key . '$#', $_r)){
-					$r = $_r;
-					$params = $_params;
+			return $this->route($route['controller'], $method, $params);
+		}
+		
+		$searches = array_keys(self::$patterns);
+		$replaces = array_values(self::$patterns);
+		
+		$numRoutes = count($this->routes);
+		$i = 0;
+		foreach($this->routes as $pattern => $route){		
+			$pattern = strtr($pattern, $this::$patterns);
+
+			if(preg_match('#^/?' . $pattern. '/?$#', $uri, $matches)){
+				if(array_key_exists('method', $route)){
+					$method = $route['method'];
+				}else{
+					$method = 'index';
+				}
+				
+				$params = array_slice($matches, 1);
+				
+				$this->route($route['controller'], $method, $params);
+				break;
+			}else{
+				if($i == $numRoutes - 1){
+					$this->route('FourOhFour');
 				}
 			}
-			
-			if(preg_match('#^' . $key . '$#', $r)){
-				$matches = preg_split('/#/', $val);
-				
-				if(isset($matches[0])){
-					$this->_controller = $matches[0];
-				}else{
-					$this->_controller = 'index';
-				}
-				
-				if(isset($matches[1])){
-					$this->_method = $matches[1];
-				}else{
-					$this->_method = 'index';
-				}
-			}
-				
+			$i++;
 		}
-		
-		if(!isset($this->_controller)){
-			$this->_controller = 'FourOhFour';
-		}
-		
-		if(!isset($this->_method)){
-			$this->_method = 'index';
-		}
-		
-		$className = 'Hawalius\\Controllers\\' . ucfirst($this->_controller);
+	}
+	
+	/**
+		* @param string $controller Controller to use.
+		* @param string $method Method to call.
+		* @param array $params Parameters to use.
+	**/
+	public function route($controller = 'FourOhFour', $method = '', array $params = array()){
+		$className = 'Hawalius\\Controllers\\' . ucfirst($controller);
 		if(!class_exists($className)){
 			$className = 'Hawalius\\Controllers\\FourOhFour';
 		}
-
+		
 		$controller = new $className($this);
-		$method = $this->_method;
 
 		if(method_exists($className, $method) && is_callable(array($className, $method))){
 			call_user_func_array(array($controller, $method), $params);
@@ -86,7 +83,10 @@ class App{
 		}	
 	}
 	
-	public function autoload($className){
+	/**
+		* @param string $className Controller to include.
+	**/
+	public function autoload($className = ''){
 		preg_match('/([^\\\]+)$/', ltrim($className, '\\'), $match);
 		$file = HAWALIUS_PATH . '/app/controllers/' . $match[0] . '.php';
 		if(file_exists($file)){
@@ -94,7 +94,11 @@ class App{
 		}
 	}
 	
-	public function getModel($modelName){
+	/**
+		* @param string $modelName Model to return.
+		* @return object
+	**/
+	public function getModel($modelName = ''){
 		if(file_exists(HAWALIUS_PATH . '/app/models/' . $modelName . '.php')){
 			require HAWALIUS_PATH . '/app/models/' . $modelName . '.php';
 		}
