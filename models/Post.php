@@ -1,119 +1,175 @@
 <?php
 namespace Hawalius\Models;
+use Hawalius\SQLQuery;
 
 class Post extends \Hawalius\Model{
-	public function many($limit = 10, $showDrafts = false){	
-		$query = 'SELECT * from ::posts ';
+	protected $table = 'posts';
+
+	public function many($limit = 10, $showDrafts = false){
+		$query = new SQLQuery($this->table);
+		$where = array();
+
 		if(!$showDrafts){
-			$query .= 'WHERE published = 1';
+			$where['published'] = 1;
 		}
-		$query .= ' ORDER by time DESC';
-		
-		$stmt = \Hawalius\DB::query($query);
-		
-		return $stmt->fetchAll();
+
+		$posts = $query->select('*')
+			->where($where)
+			->orderBy('time DESC')
+			->run()
+			->fetchAll();
+
+		return $posts;
 	}
-	
-	public function drafts(){	
-		$stmt = \Hawalius\DB::query('SELECT * from ::posts WHERE published = 0 ORDER by time DESC');
-		
-		return $stmt->fetchAll();
+
+	public function drafts(){
+		$query = new SQLQuery($this->table);
+		$where = array();
+		$where['published'] = 0;
+
+		$posts = $query->select('*')
+			->where($where)
+			->orderBy('time DESC')
+			->run()
+			->fetchAll();
+
+		return $posts;
 	}
-	
-	public function published(){	
-		$stmt = \Hawalius\DB::query('SELECT * from ::posts WHERE published = 1 ORDER by time DESC');
-		
-		return $stmt->fetchAll();
+
+	public function published(){
+		$query = new SQLQuery($this->table);
+		$where = array();
+		$where['published'] = 1;
+
+		$posts = $query->select('*')
+			->where($where)
+			->orderBy('time DESC')
+			->run()
+			->fetchAll();
+
+		return $posts;
 	}
-	
-	public function single($id = 0){	
-		$stmt = \Hawalius\DB::prepare('SELECT * from ::posts WHERE id = :id');
-		$stmt->bindParam('id', $id, \PDO::PARAM_INT);
-		$stmt->execute();
-		
-		return $stmt->fetch(\PDO::FETCH_ASSOC);
+
+	public function single($id = 0){
+		$query = new SQLQuery($this->table);
+		$where = array();
+		$where['id'] = $id;
+
+		$post = $query->select('*')
+			->where($where)
+			->run()
+			->fetch();
+
+		return $post;
 	}
-	
-	public function url($url = ''){	
-		$stmt = \Hawalius\DB::prepare('SELECT * from ::posts WHERE url = :url AND published = 1');
-		$stmt->bindParam('url', $url, \PDO::PARAM_STR);
-		$stmt->execute();
-		
-		return $stmt->fetch(\PDO::FETCH_ASSOC);
+
+	public function url($url = ''){
+		$query = new SQLQuery($this->table);
+		$where = array();
+		$where['url'] = $url;
+		$where['published'] = 1;
+
+		$post = $query->select('*')
+			->where($where)
+			->run()
+			->fetch();
+
+		return $post;
 	}
-	
+
 	public function num(){
-		$stmt = \Hawalius\DB::prepare('SELECT id from ::posts');
-		$stmt->execute();
-		
-		return $stmt->rowCount();
+		$query = new SQLQuery($this->table);;
+
+		$num = $query->select('COUNT(id)')
+			->run()
+			->fetch();
+
+		return $num['COUNT(id)'];
 	}
-	
+
 	public function numPublished(){
-		$stmt = \Hawalius\DB::prepare('SELECT id from ::posts WHERE published = 1');
-		$stmt->execute();
-		
-		return $stmt->rowCount();
+		$query = new SQLQuery($this->table);
+		$where = array();
+		$where['published'] = 1;
+
+		$num = $query->select('COUNT(id)')
+			->where($where)
+			->run()
+			->fetch();
+
+		return $num['COUNT(id)'];
 	}
-	
+
 	public function numDrafts(){
-		$stmt = \Hawalius\DB::prepare('SELECT id from ::posts WHERE published = 0');
-		$stmt->execute();
-		
-		return $stmt->rowCount();
+		$query = new SQLQuery($this->table);
+		$where = array();
+		$where['published'] = 0;
+
+		$num = $query->select('COUNT(id)')
+			->where($where)
+			->run()
+			->fetch();
+
+		return $num['COUNT(id)'];
 	}
-	
-	public function write($title, $content, $url, $author = 0, $publish = 0){	
-		$stmt = \Hawalius\DB::prepare('INSERT ::posts SET title = :title, content = :content, url = :url, author_id = :author, published = :published');
-		$stmt->bindParam('title', $title, \PDO::PARAM_STR);
-		$stmt->bindParam('content', $content, \PDO::PARAM_STR);
-		$stmt->bindParam('url', $url, \PDO::PARAM_STR);
-		$stmt->bindParam('author', $author, \PDO::PARAM_INT);
-		$stmt->bindParam('published', $publish, \PDO::PARAM_INT);
-		$stmt->execute();
-		
-		// Return true for now
-		return true;
+
+	public function write($title, $content, $url, $author = 0, $publish = 0){
+		$query = new SQLQuery($this->table);
+
+		$post = $query->insert(array(
+			'title' => $title,
+			'content' => $content,
+			'url' => $url,
+			'author_id' => $author,
+			'published' => $publish
+		))->run();
+
+		return $post;
 	}
-	
-	public function edit($id, $title, $content, $url, $author = 0){	
-		$stmt = \Hawalius\DB::prepare('UPDATE ::posts SET title = :title, content = :content, url = :url, author_id = :author WHERE id = :id');
-		$stmt->bindParam('id', $id, \PDO::PARAM_INT);
-		$stmt->bindParam('title', $title, \PDO::PARAM_STR);
-		$stmt->bindParam('content', $content, \PDO::PARAM_STR);
-		$stmt->bindParam('url', $url, \PDO::PARAM_STR);
-		$stmt->bindParam('author', $author, \PDO::PARAM_INT);
-		$stmt->execute();
-		
-		// Return true for now
-		return true;
+
+	public function edit($id, $title, $content, $url, $author = 0, $publish = 0){
+		$query = new SQLQuery($this->table);
+		$where = array();
+		$where['id'] = $id;
+
+		$post = $query->update(array(
+			'title' => $title,
+			'content' => $content,
+			'author_id' => $author,
+			'published' => $publish
+			))
+			->where($where)
+			->run();
+
+		return $post;
 	}
-	
+
 	public function delete($id){
-		global $DB;
-                
-		$stmt = \Hawalius\DB::prepare('DELETE from ::posts WHERE id = :id');
-		$stmt->bindParam('id', $id, \PDO::PARAM_INT);
-		$stmt->execute();
-                
-		// Return true for now
-		return true;
+		$query = new SQLQuery($this->table);
+		$where = array();
+		$where['id'] = $id;
+
+		$post = $query->delete()
+			->where($where)
+			->run();
+
+		return $post;
 	}
-	
-	public function publish($id){	
+
+	public function publish($id){
 		$stmt = \Hawalius\DB::prepare('UPDATE ::posts SET published = 1 WHERE id = :id');
 		$stmt->bindParam('id', $id, \PDO::PARAM_INT);
 		$stmt->execute();
-		
+
 		// Return true for now
 		return true;
 	}
-	
-	public function draft($id){	
+
+	public function draft($id){
 		$stmt = \Hawalius\DB::prepare('UPDATE ::posts SET published = 0 WHERE id = :id');
 		$stmt->bindParam('id', $id, \PDO::PARAM_INT);
 		$stmt->execute();
-		
+
 		// Return true for now
 		return true;
 	}

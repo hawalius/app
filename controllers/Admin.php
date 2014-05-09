@@ -5,7 +5,7 @@ require HAWALIUS_PATH . '/app/libraries/Auth.php';
 class Admin extends \Hawalius\Controller{
 	public function __construct($app = NULL, $view = NULL){
 		parent::__construct($app, $view);
-		
+
 		$this->view->addFunction('getToken', new \Twig_Function_Function('\\Hawalius\\CSRF::getToken'));
 		$this->view->addFunction('getUser', new \Twig_Function_Function('\\Hawalius\\Auth::get'));
 		$this->view->addFunction('getVersion', new \Twig_Function_Function('getVersion'));
@@ -15,7 +15,7 @@ class Admin extends \Hawalius\Controller{
 	public function index(){
 		$post = $this->app->getModel('post');
 		$page = $this->app->getModel('page');
-		
+
 		if(\Hawalius\Auth::guest()){
 			redirect('/admin/login');
 		}else{
@@ -27,14 +27,14 @@ class Admin extends \Hawalius\Controller{
 			]);
 		}
 	}
-	
+
 	public function posts($type = '', $id = 0){
 		if(\Hawalius\Auth::guest()){
 			redirect('/admin');
 		}
-		
+
 		$post = $this->app->getModel('post');
-		
+
 		switch($type){
 			case 'write':
 				if(isset($_POST['title']) && isset($_POST['content'])){
@@ -47,7 +47,7 @@ class Admin extends \Hawalius\Controller{
 				}
 				$this->view->render('admin/writepost.html');
 			break;
-			
+
 			case 'publish':
 				if($id){
 					if($post->publish($id)){
@@ -55,7 +55,7 @@ class Admin extends \Hawalius\Controller{
 					}
 				}
 			break;
-			
+
 			case 'draft':
 				if($id){
 					if($post->draft($id)){
@@ -63,17 +63,17 @@ class Admin extends \Hawalius\Controller{
 					}
 				}
 			break;
-			
+
 			case 'edit':
 				$p = $post->single($id);
 				if(is_array($p)){
 					if(isset($_POST['title']) && isset($_POST['content'])){
 						\Hawalius\CSRF::check();
-						if($post->edit($id, $_POST['title'], $_POST['content'], $p['url'], $p['author'])){
+						if($post->edit($id, $_POST['title'], $_POST['content'], $p['url'], $p['author_id'], $p['published'])){
 							redirect('/admin/posts');
 						}
 					}
-					
+
 					$this->view->render('admin/editpost.html', [
 						'post' => $p
 					]);
@@ -81,7 +81,7 @@ class Admin extends \Hawalius\Controller{
 					redirect('/admin/posts/write');
 				}
 			break;
-			
+
 			case 'delete':
 				if(isset($_POST['id'])){
 					\Hawalius\CSRF::check();
@@ -90,7 +90,7 @@ class Admin extends \Hawalius\Controller{
 					redirect('/admin/posts');
 				}
 			break;
-			
+
 			default:
 				$drafts = $post->drafts();
 				$published = $post->published();
@@ -101,29 +101,29 @@ class Admin extends \Hawalius\Controller{
 				]);
 			break;
 		}
-		
+
 	}
-	
+
 	public function pages($type = '', $id = 0){
 		if(\Hawalius\Auth::guest()){
 			redirect('/admin');
 		}
-		
+
 		$page = $this->app->getModel('page');
-		
+
 		switch($type){
 			case 'write':
 				if(isset($_POST['title']) && isset($_POST['content'])){
 					\Hawalius\CSRF::check();
 					$url = slug($_POST['title']);
-					$author = Auth::get()['id'];
+					$author = \Hawalius\Auth::get()['id'];
 					if($page->write($_POST['title'], $_POST['content'], $url, $author)){
 						redirect('/admin/pages');
 					}
 				}
 				$this->view->render('admin/writepage.html');
 			break;
-			
+
 			case 'publish':
 				if($id){
 					if($page->publish($id)){
@@ -131,7 +131,7 @@ class Admin extends \Hawalius\Controller{
 					}
 				}
 			break;
-			
+
 			case 'draft':
 				if($id){
 					if($page->draft($id)){
@@ -139,7 +139,7 @@ class Admin extends \Hawalius\Controller{
 					}
 				}
 			break;
-			
+
 			case 'edit':
 				$p = $page->single($id);
 				if(is_array($p)){
@@ -149,7 +149,7 @@ class Admin extends \Hawalius\Controller{
 							redirect('/admin/pages');
 						}
 					}
-					
+
 					$this->view->render('admin/editpage.html', [
 						'post' => $p
 					]);
@@ -157,7 +157,7 @@ class Admin extends \Hawalius\Controller{
 					redirect('/admin/pages/write');
 				}
 			break;
-			
+
 			case 'delete':
 				if(isset($_POST['id'])){
 					\Hawalius\CSRF::check();
@@ -166,7 +166,7 @@ class Admin extends \Hawalius\Controller{
 					redirect('/admin/pages');
 				}
 			break;
-			
+
 			default:
 				$drafts = $page->drafts();
 				$published = $page->published();
@@ -178,7 +178,7 @@ class Admin extends \Hawalius\Controller{
 			break;
 		}
 	}
-	
+
 	public function settings($type = '', $action = '', $value = ''){
 		switch($type){
 			case 'themes':
@@ -192,7 +192,7 @@ class Admin extends \Hawalius\Controller{
 					}
 				}
 			break;
-			
+
 			default:
 				$this->view->render('admin/settings.html', [
 					'themes' => \Hawalius\Themes::many()
@@ -200,12 +200,12 @@ class Admin extends \Hawalius\Controller{
 			break;
 		}
 	}
-	
+
 	public function login(){
 		if(!\Hawalius\Auth::guest()){
 			redirect('/admin');
 		}
-		
+
 		if(!isset($_POST['username']) || !isset($_POST['password'])){
 			$this->view->render('admin/login.html');
 		}else{
@@ -219,7 +219,7 @@ class Admin extends \Hawalius\Controller{
 			}
 		}
 	}
-	
+
 	public function logout(){
 		\Hawalius\CSRF::check();
 		\Hawalius\Auth::logout();
