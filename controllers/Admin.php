@@ -109,6 +109,7 @@ class Admin extends \Hawalius\Controller{
 			redirect('/admin');
 		}
 
+		$post = $this->app->getModel('post');
 		$page = $this->app->getModel('page');
 
 		switch($type){
