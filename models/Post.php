@@ -157,20 +157,30 @@ class Post extends \Hawalius\Model{
 	}
 
 	public function publish($id){
-		$stmt = \Hawalius\DB::prepare('UPDATE ::posts SET published = 1 WHERE id = :id');
-		$stmt->bindParam('id', $id, \PDO::PARAM_INT);
-		$stmt->execute();
+		$query = new SQLQuery($this->table);
+		$where = array();
+		$where['id'] = $id;
 
-		// Return true for now
-		return true;
+		$post = $query->update(array(
+			'published' => 1
+			))
+			->where($where)
+			->run();
+
+		return $post;
 	}
 
 	public function draft($id){
-		$stmt = \Hawalius\DB::prepare('UPDATE ::posts SET published = 0 WHERE id = :id');
-		$stmt->bindParam('id', $id, \PDO::PARAM_INT);
-		$stmt->execute();
+		$query = new SQLQuery($this->table);
+		$where = array();
+		$where['id'] = $id;
 
-		// Return true for now
-		return true;
+		$post = $query->update(array(
+			'published' => 0
+			))
+			->where($where)
+			->run();
+
+		return $post;
 	}
 }
