@@ -111,8 +111,11 @@ class SQLQuery{
 			}
 
 			$query .= ' FROM ' . $this->table;
-		}else if($this->type == 'UPDATE' || $this->type == 'DELETE'){
+		}else if($this->type == 'UPDATE'){
 			$query .= $this->table;
+		}else if($this->type == 'DELETE'){
+			$query = $this->type;
+			$query .= ' FROM ' . $this->table;
 		}else if($this->type == 'INSERT'){
 			$query .= ' INTO ' . $this->table;
 		}
@@ -283,12 +286,8 @@ class SQLQuery{
 		return $this;
 	}
 
-	/**
-		* @param array $data Array of data.
-	**/
-	public function delete(array $data){
+	public function delete(){
 		$this->type = 'DELETE';
-		$this->data = $data;
 
 		return $this;
 	}
