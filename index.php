@@ -32,14 +32,15 @@ try{
 	require HAWALIUS_PATH . '/app/core/Controller.php';
 	require HAWALIUS_PATH . '/app/core/Model.php';
 	require HAWALIUS_PATH . '/app/core/View.php';
+	require HAWALIUS_PATH . '/app/core/Input.php';
 	require HAWALIUS_PATH . '/app/core/CSRF.php';
 	require HAWALIUS_PATH . '/app/core/Utils.php';
-	
+
 	require HAWALIUS_PATH . '/app/libraries/Themes.php';
 	require HAWALIUS_PATH . '/app/libraries/Plugins.php';
 	require HAWALIUS_PATH . '/app/libraries/Plugin.php';
-	
-	
+
+
 	require HAWALIUS_PATH . '/app/libraries/Config.php';
 	if(file_exists(HAWALIUS_PATH . '/config.php')){
 		require HAWALIUS_PATH . '/config.php';
@@ -47,20 +48,20 @@ try{
 		// Installer stuff
 		redirect('/install.php');
 	}
-	
+
 	Config::init();
-	
+
 	$twig = loadTwig();
-	
+
 	$Plugins = new Plugins($twig);
 	$Plugins->init();
-	
+
 	$app = new App($twig, $routes);
 	spl_autoload_register(array($app, 'autoload'));
 	$app->run();
 }catch(Exception $e){
 	http_response_code(503);
-	
+
 	if(ENV == 'development'){
 		die('Hawalius Exception: ' . $e->getMessage());
 	}

@@ -117,11 +117,11 @@ class Post extends \Hawalius\Model{
 		$query = new SQLQuery($this->table);
 
 		$post = $query->insert(array(
-			'title' => $title,
-			'content' => $content,
-			'url' => $url,
-			'author_id' => $author,
-			'published' => $publish
+				'title' => $title,
+				'content' => $content,
+				'url' => $url,
+				'author_id' => $author,
+				'published' => $publish
 		))->run();
 
 		return $post;
@@ -133,10 +133,10 @@ class Post extends \Hawalius\Model{
 		$where['id'] = $id;
 
 		$post = $query->update(array(
-			'title' => $title,
-			'content' => $content,
-			'author_id' => $author,
-			'published' => $publish
+				'title' => $title,
+				'content' => $content,
+				'author_id' => $author,
+				'published' => $publish
 			))
 			->where($where)
 			->run();

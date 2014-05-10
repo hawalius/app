@@ -37,11 +37,11 @@ class Admin extends \Hawalius\Controller{
 
 		switch($type){
 			case 'write':
-				if(isset($_POST['title']) && isset($_POST['content'])){
+				if(isset(Input::file('file')) && isset(Input::post('content'))){
 					\Hawalius\CSRF::check();
-					$url = slug($_POST['title']);
+					$url = slug(Input:post('title'));
 					$author = \Hawalius\Auth::get()['id'];
-					if($post->write($_POST['title'], $_POST['content'], $url, $author)){
+					if($post->write(Input:post('title'), Input:post('content'), $url, $author)){
 						redirect('/admin/posts');
 					}
 				}
@@ -67,7 +67,7 @@ class Admin extends \Hawalius\Controller{
 			case 'edit':
 				$p = $post->single($id);
 				if(is_array($p)){
-					if(isset($_POST['title']) && isset($_POST['content'])){
+					if(isset(Input::post('title')) && isset(Input::post('content'))){
 						\Hawalius\CSRF::check();
 						if($post->edit($id, $_POST['title'], $_POST['content'], $p['url'], $p['author_id'], $p['published'])){
 							redirect('/admin/posts');
@@ -114,11 +114,11 @@ class Admin extends \Hawalius\Controller{
 
 		switch($type){
 			case 'write':
-				if(isset($_POST['title']) && isset($_POST['content'])){
+				if(isset(Input::post('title')) && isset(Input::post('content'))){
 					\Hawalius\CSRF::check();
-					$url = slug($_POST['title']);
+					$url = slug(Input::post('title'));
 					$author = \Hawalius\Auth::get()['id'];
-					if($page->write($_POST['title'], $_POST['content'], $url, $author)){
+					if($page->write(Input::post('title'), Input::post('content'), $url, $author)){
 						redirect('/admin/pages');
 					}
 				}
@@ -144,7 +144,7 @@ class Admin extends \Hawalius\Controller{
 			case 'edit':
 				$p = $page->single($id);
 				if(is_array($p)){
-					if(isset($_POST['title']) && isset($_POST['content'])){
+					if(isset(Input::post('title')) && isset(Input::post('content'))){
 						\Hawalius\CSRF::check();
 						if($page->edit($id, $_POST['title'], $_POST['content'], $p['url'], $p['author'])){
 							redirect('/admin/pages');
@@ -207,12 +207,12 @@ class Admin extends \Hawalius\Controller{
 			redirect('/admin');
 		}
 
-		if(!isset($_POST['username']) || !isset($_POST['password'])){
+		if(!Input::post('username') || !Input::post('password')){
 			$this->view->render('admin/login.html');
 		}else{
 			\Hawalius\CSRF::check();
-			$username = $_POST['username'];
-			$password = $_POST['password'];
+			$username = Input::post('username');
+			$password = Input::post('password');
 			if(\Hawalius\Auth::login($username, $password)){
 				redirect('/admin');
 			}else{
