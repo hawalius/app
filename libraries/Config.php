@@ -9,7 +9,7 @@ class Config{
 		$c = $query->select('*')
 			->run();
 
-		while($row = $c->fetchAll()){
+		foreach($c->fetchAll() as $row){
 			self::$config[$row['name']] = $row['value'];
 		}
 	}

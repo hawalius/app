@@ -1,5 +1,6 @@
 <?php
 namespace Hawalius\Controllers;
+use \Hawalius\Input;
 
 require HAWALIUS_PATH . '/app/libraries/Auth.php';
 class Admin extends \Hawalius\Controller{
@@ -37,11 +38,11 @@ class Admin extends \Hawalius\Controller{
 
 		switch($type){
 			case 'write':
-				if(isset(Input::file('file')) && isset(Input::post('content'))){
+				if(Input::file('file') && Input::post('content')){
 					\Hawalius\CSRF::check();
-					$url = slug(Input:post('title'));
+					$url = slug(Input::post('title'));
 					$author = \Hawalius\Auth::get()['id'];
-					if($post->write(Input:post('title'), Input:post('content'), $url, $author)){
+					if($post->write(Input::post('title'), Input::post('content'), $url, $author)){
 						redirect('/admin/posts');
 					}
 				}
@@ -67,9 +68,9 @@ class Admin extends \Hawalius\Controller{
 			case 'edit':
 				$p = $post->single($id);
 				if(is_array($p)){
-					if(isset(Input::post('title')) && isset(Input::post('content'))){
+					if(Input::post('title') && Input::post('content')){
 						\Hawalius\CSRF::check();
-						if($post->edit($id, $_POST['title'], $_POST['content'], $p['url'], $p['author_id'], $p['published'])){
+						if($post->edit($id, Input::post('title'), Input::post('content'), $p['url'], $p['author_id'], $p['published'])){
 							redirect('/admin/posts');
 						}
 					}
@@ -114,7 +115,7 @@ class Admin extends \Hawalius\Controller{
 
 		switch($type){
 			case 'write':
-				if(isset(Input::post('title')) && isset(Input::post('content'))){
+				if(Input::post('title') && Input::post('content')){
 					\Hawalius\CSRF::check();
 					$url = slug(Input::post('title'));
 					$author = \Hawalius\Auth::get()['id'];
@@ -144,7 +145,7 @@ class Admin extends \Hawalius\Controller{
 			case 'edit':
 				$p = $page->single($id);
 				if(is_array($p)){
-					if(isset(Input::post('title')) && isset(Input::post('content'))){
+					if(Input::post('title') && Input::post('content')){
 						\Hawalius\CSRF::check();
 						if($page->edit($id, $_POST['title'], $_POST['content'], $p['url'], $p['author'])){
 							redirect('/admin/pages');
